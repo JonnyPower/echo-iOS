@@ -7,6 +7,10 @@
 //
 
 #import "AppDelegate.h"
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
+#import "AuthenticationViewController.h"
+#import "MessagingViewController.h"
 
 @interface AppDelegate ()
 
@@ -14,9 +18,20 @@
 
 @implementation AppDelegate
 
+@synthesize webSocketClient = _webSocketClient;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    [Fabric with:@[[Crashlytics class]]];
+    
+    _webSocketClient = [[EchoWebSocketClient alloc] init];
+    _webSocketClient.managedObjectContext = self.managedObjectContext;
+    
+    UINavigationController *navController = ((UINavigationController*)self.window.rootViewController);
+    AuthenticationViewController *authController = [navController.viewControllers objectAtIndex:0];
+    authController.webSocketClient = _webSocketClient;
+    
     return YES;
 }
 
@@ -41,7 +56,55 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     // Saves changes in the application's managed object context before the application terminates.
-    [self saveContext];
+}
+
+- (Session*)savedSession {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSData *encodedObject = [defaults objectForKey:@"session"];
+    Session *session = [NSKeyedUnarchiver unarchiveObjectWithData:encodedObject];
+    return session;
+}
+
+- (void)saveSession:(Session*)session {
+    NSData *encodedObject = [NSKeyedArchiver archivedDataWithRootObject:session];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:encodedObject forKey:@"session"];
+    [defaults synchronize];
+}
+
+- (void)logout {
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"session"];
+    [self.webSocketClient disconnect];
+    
+    [self deleteAll];
+    
+    UINavigationController *navController = ((UINavigationController*)self.window.rootViewController);
+    if([[[navController viewControllers] lastObject] isKindOfClass:[MessagingViewController class]]) {
+        [navController popToRootViewControllerAnimated:YES];
+    }
+}
+
+- (void)deleteAllParticipants {
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Participant"];
+    NSBatchDeleteRequest *delete = [[NSBatchDeleteRequest alloc] initWithFetchRequest:request];
+    
+    NSError *deleteError = nil;
+    [self.persistentStoreCoordinator executeRequest:delete withContext:self.managedObjectContext error:&deleteError];
+    NSAssert(deleteError == nil, @"Delete error when deleting all participants: %@", [deleteError localizedDescription]);
+}
+
+- (void)deleteAllMessages {
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Message"];
+    NSBatchDeleteRequest *delete = [[NSBatchDeleteRequest alloc] initWithFetchRequest:request];
+    
+    NSError *deleteError = nil;
+    [self.persistentStoreCoordinator executeRequest:delete withContext:self.managedObjectContext error:&deleteError];
+    NSAssert(deleteError == nil, @"Delete error when deleting all messages: %@", [deleteError localizedDescription]);
+}
+
+- (void)deleteAll {
+    [self deleteAllMessages];
+    [self deleteAllParticipants];
 }
 
 #pragma mark - Core Data stack
@@ -50,13 +113,7 @@
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
-- (NSURL *)applicationDocumentsDirectory {
-    // The directory the application uses to store the Core Data store file. This code uses a directory named "com.jonnypower.Echo" in the application's documents directory.
-    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-}
-
 - (NSManagedObjectModel *)managedObjectModel {
-    // The managed object model for the application. It is a fatal error for the application not to be able to find and load its model.
     if (_managedObjectModel != nil) {
         return _managedObjectModel;
     }
@@ -66,26 +123,17 @@
 }
 
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
-    // The persistent store coordinator for the application. This implementation creates and returns a coordinator, having added the store for the application to it.
     if (_persistentStoreCoordinator != nil) {
         return _persistentStoreCoordinator;
     }
     
-    // Create the coordinator and store
-    
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
-    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"Echo.sqlite"];
     NSError *error = nil;
-    NSString *failureReason = @"There was an error creating or loading the application's saved data.";
-    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
-        // Report any error we got.
-        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        dict[NSLocalizedDescriptionKey] = @"Failed to initialize the application's saved data";
-        dict[NSLocalizedFailureReasonErrorKey] = failureReason;
-        dict[NSUnderlyingErrorKey] = error;
-        error = [NSError errorWithDomain:@"YOUR_ERROR_DOMAIN" code:9999 userInfo:dict];
-        // Replace this with code to handle the error appropriately.
-        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSInMemoryStoreType
+                                                   configuration:nil
+                                                             URL:nil
+                                                         options:nil
+                                                           error:&error]) {
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
@@ -95,7 +143,6 @@
 
 
 - (NSManagedObjectContext *)managedObjectContext {
-    // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.)
     if (_managedObjectContext != nil) {
         return _managedObjectContext;
     }
@@ -107,21 +154,6 @@
     _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
     [_managedObjectContext setPersistentStoreCoordinator:coordinator];
     return _managedObjectContext;
-}
-
-#pragma mark - Core Data Saving support
-
-- (void)saveContext {
-    NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
-    if (managedObjectContext != nil) {
-        NSError *error = nil;
-        if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
-            // Replace this implementation with code to handle the error appropriately.
-            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        }
-    }
 }
 
 @end
