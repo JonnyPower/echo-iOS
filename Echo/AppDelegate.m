@@ -73,6 +73,13 @@
 }
 
 - (void)logout {
+    Session *session = [self savedSession];
+    EchoWebServiceClient *client = [[EchoWebServiceClient alloc] init];
+    client.delegate = self;
+    [client logoutSessionToken:session.sessionToken deviceToken:session.deviceToken];
+}
+
+- (void)logoutSuccessful {
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"session"];
     [self.webSocketClient disconnect];
     
@@ -84,27 +91,20 @@
     }
 }
 
-- (void)deleteAllParticipants {
-    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Participant"];
-    NSBatchDeleteRequest *delete = [[NSBatchDeleteRequest alloc] initWithFetchRequest:request];
-    
-    NSError *deleteError = nil;
-    [self.persistentStoreCoordinator executeRequest:delete withContext:self.managedObjectContext error:&deleteError];
-    NSAssert(deleteError == nil, @"Delete error when deleting all participants: %@", [deleteError localizedDescription]);
+- (void)logoutFailed:(NSString *)reason {
+    // TODO
 }
 
-- (void)deleteAllMessages {
-    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Message"];
-    NSBatchDeleteRequest *delete = [[NSBatchDeleteRequest alloc] initWithFetchRequest:request];
-    
-    NSError *deleteError = nil;
-    [self.persistentStoreCoordinator executeRequest:delete withContext:self.managedObjectContext error:&deleteError];
-    NSAssert(deleteError == nil, @"Delete error when deleting all messages: %@", [deleteError localizedDescription]);
+- (void)requestFailed:(NSError *)error {
+    // TODO
 }
 
 - (void)deleteAll {
-    [self deleteAllMessages];
-    [self deleteAllParticipants];
+    _persistentStoreCoordinator = nil;
+    _managedObjectContext = nil;
+    _managedObjectModel = nil;
+    
+    _webSocketClient.managedObjectContext = self.managedObjectContext;
 }
 
 #pragma mark - Core Data stack

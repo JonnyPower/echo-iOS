@@ -56,11 +56,6 @@
 
 - (void)connectWithSession:(Session *)connectSession {
     
-    if(socket.socketState > SocketConnecting) {
-        socket = [[PhxSocket alloc] initWithURL:[NSURL URLWithString:SOCKET_URL_STRING] heartbeatInterval:20];
-        socket.delegate = self;
-    }
-    
     self.session = connectSession;
     
     [socket connectWithParams:@{@"token": session.sessionToken}];
@@ -75,12 +70,25 @@
         for (NSDictionary *messageDictionary in [response objectForKey:@"messages"]) {
             [self saveMessage: messageDictionary];
         }
+        for (id<EchoWebSocketClientDelegate> delegate in delegates) {
+            if([delegate respondsToSelector:@selector(connectFinished)]) {
+                [delegate connectFinished];
+            }
+        }
     }];
-    [join onReceive:@"error" callback:^(id reason) {
-        NSLog(@"failed join %@", reason);
+    [join onReceive:@"error" callback:^(id response) {
+        for (id<EchoWebSocketClientDelegate> delegate in delegates) {
+            if([delegate respondsToSelector:@selector(connectFailed:)]) {
+                [delegate connectFailed:[response objectForKey:@"reason"]];
+            }
+        }
     }];
     [join after:60 callback:^(void) {
-        NSLog(@"Networking issue. Still waiting...");
+        for (id<EchoWebSocketClientDelegate> delegate in delegates) {
+            if([delegate respondsToSelector:@selector(connectFailed:)]) {
+                [delegate connectFailed:@"Took too long to connect"];
+            }
+        }
     }];
 }
 
@@ -103,6 +111,7 @@
         
         [self saveMessageParticipantId: participantId
                        participantName: participantName
+                       participantType: @"iOS"
                              messageId: messageId
                         messageContent: content
                                   sent: sent];
@@ -138,15 +147,12 @@
 
 - (void)disconnect {
     [socket disconnect];
+    socket = [[PhxSocket alloc] initWithURL:[NSURL URLWithString:SOCKET_URL_STRING] heartbeatInterval:20];
+    socket.delegate = self;
 }
 
 - (void)phxSocketDidOpen {
     NSLog(@"socket open");
-    for (id<EchoWebSocketClientDelegate> delegate in delegates) {
-        if([delegate respondsToSelector:@selector(socketDidOpen)]) {
-            [delegate socketDidOpen];
-        }
-    }
 }
 
 - (void)phxSocketDidReceiveError:(id)error {
@@ -165,6 +171,7 @@
     
     NSNumber *participantId = [from objectForKey:@"id"];
     NSString *participantName = [from objectForKey:@"name"];
+    NSString *participantType = [from objectForKey:@"type"];
     
     NSString *messageContent = [messageDictionary objectForKey:@"content"];
     
@@ -179,6 +186,7 @@
     
     [self saveMessageParticipantId: participantId
                    participantName: participantName
+                   participantType: participantType
                          messageId: messageId
                     messageContent: messageContent
                               sent: sent];
@@ -186,6 +194,7 @@
 
 - (void)saveMessageParticipantId:(NSNumber*)participantId
                  participantName:(NSString*)participantName
+                 participantType:(NSString*)participantType
                        messageId:(NSNumber*)messageId
                   messageContent:(NSString*)messageContent
                             sent:(NSDate*)sent {
@@ -215,6 +224,7 @@
     }
     
     participant.name = participantName;
+    participant.type = participantType;
     
     Message *message = [NSEntityDescription insertNewObjectForEntityForName: @"Message"
                                                      inManagedObjectContext: managedObjectContext];
@@ -239,7 +249,7 @@
     }
     
     for(Message *message in results) {
-        if(message.id == messageId) {
+        if([message.id intValue] == [messageId intValue]) {
             return YES;
         }
     }

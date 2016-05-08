@@ -23,20 +23,36 @@
 @synthesize fieldPassword;
 @synthesize textAlert;
 @synthesize webSocketClient;
+@synthesize spinnerLogin;
+@synthesize viewDarken;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [webSocketClient addDelegate: self];
-    
     [fieldDeviceName setText:[[UIDevice currentDevice] name]];
     
-    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [fieldPassword setText: @""];
+    [self.navigationController setNavigationBarHidden:YES];
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [webSocketClient addDelegate: self];
+    
+    AppDelegate *appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
     Session *savedSession = [appDelegate savedSession];
     if(savedSession) {
+        [self startSpinner];
         [Answers logCustomEventWithName:@"Loaded Saved Session" customAttributes:nil];
         [webSocketClient connectWithSession: savedSession];
     }
+    
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -56,7 +72,25 @@
     [Answers logCustomEventWithName:@"Login Attempted" customAttributes:@{@"Username":fieldUsername.text,
                                                                           @"deviceName":fieldDeviceName.text,
                                                                           @"deviceToken":@"testing"}];
+    [self startSpinner];
+}
 
+- (void)startSpinner {
+    [spinnerLogin setAlpha: 1.0];
+    [UIView animateWithDuration:2 animations:^{
+        [spinnerLogin startAnimating];
+        [spinnerLogin setHidden: NO];
+        [viewDarken setHidden: NO];
+    }];
+}
+
+- (void)stopSpinner {
+    [UIView animateWithDuration:2 animations:^{
+        [spinnerLogin stopAnimating];
+        [spinnerLogin setHidden: YES];
+        [spinnerLogin setAlpha: 0];
+        [viewDarken setHidden: YES];
+    }];
 }
 
 - (void)requestFailed:(NSError *)error {
@@ -66,6 +100,7 @@
 - (void)loginFailed:(NSString *)reason {
     [textAlert setText: reason];
     [textAlert setHidden: NO];
+    [self stopSpinner];
 }
 
 - (void)loginSuccessful:(Session *)session {
@@ -73,12 +108,14 @@
     [webSocketClient connectWithSession: session];
 }
 
-- (void)socketDidOpen {
+- (void)connectFinished {
     [self performSegueWithIdentifier: @"messaging" sender: self];
+    [self stopSpinner];
 }
 
-- (void)socketFailedSetup {
-    
+- (void)connectFailed:(NSString*)reason {
+    [textAlert setText: reason];
+    [textAlert setHidden: NO];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {

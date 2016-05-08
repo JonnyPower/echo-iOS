@@ -17,12 +17,9 @@
     
     [self willAccessValueForKey:@"sent"];
     
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    NSLocale *enUSPOSIXLocale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
-    [dateFormatter setLocale:enUSPOSIXLocale];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
-    
-    NSString *dayString = [[[dateFormatter stringFromDate: self.sent] componentsSeparatedByString:@"T"] firstObject];
+    NSString *dayString = [NSDateFormatter localizedStringFromDate:self.sent
+                                                          dateStyle:NSDateFormatterShortStyle
+                                                          timeStyle:NSDateFormatterNoStyle];
     
     [self didAccessValueForKey:@"sent"];
     

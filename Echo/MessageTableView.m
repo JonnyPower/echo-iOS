@@ -16,6 +16,16 @@
 
 @synthesize inputAccessoryView = _inputAccessoryView;
 
+- (instancetype)init {
+    self = [super init];
+    
+    if(self) {
+        self.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+    }
+    
+    return self;
+}
+
 - (BOOL)canBecomeFirstResponder {
     return YES;
 }

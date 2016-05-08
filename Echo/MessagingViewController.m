@@ -19,6 +19,7 @@
 @property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, retain) UIRefreshControl *refreshControl;
 @property int lookbackDays;
+@property NSIndexPath* insertedIndexPath;
 
 @end
 
@@ -29,6 +30,7 @@
 @synthesize fetchedResultsController;
 @synthesize refreshControl;
 @synthesize lookbackDays;
+@synthesize textEmpty;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -50,8 +52,6 @@
     UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTouchView)];
     [self.view addGestureRecognizer:recognizer];
     
-    [webSocketClient addDelegate: self];
-    
     MessageInputView *inputView = (MessageInputView*)((MessageTableView*)self.tableView).inputAccessoryView;
     inputView.delegate = self;
     
@@ -71,21 +71,36 @@
     fetchedResultsController.delegate = self;
     
     
+    
+    refreshControl = [[UIRefreshControl alloc]init];
+    [self.tableView addSubview:refreshControl];
+    [refreshControl addTarget:self action:@selector(actionHistroy:) forControlEvents:UIControlEventValueChanged];
+    [self updateRefreshControlLabel];
+}
+
+- (void)viewDidUnload {
+    self.fetchedResultsController = nil;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [webSocketClient addDelegate: self];
+    
+    [self.navigationController setNavigationBarHidden:NO];
+    
     NSError *error;
     if (![[self fetchedResultsController] performFetch:&error]) {
         // Update to handle the error appropriately.
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         exit(-1);  // Fail
     }
-    
-    
-    refreshControl = [[UIRefreshControl alloc]init];
-    [self.tableView addSubview:refreshControl];
-    [refreshControl addTarget:self action:@selector(actionHistroy:) forControlEvents:UIControlEventValueChanged];
+    [self.tableView reloadData];
+    if([[self.fetchedResultsController sections] count]>0){
+        [self.textEmpty setHidden: YES];
+    }
 }
 
-- (void)viewDidUnload {
-    self.fetchedResultsController = nil;
+- (void)viewDidDisappear:(BOOL)animated {
+    [webSocketClient removeDelegate: self];
 }
 
 - (void)didTouchView {
@@ -108,16 +123,43 @@
 
 - (void)messageHistoryFinished {
     [refreshControl endRefreshing];
+    [self updateRefreshControlLabel];
     [self.tableView reloadData];
+    [self scrollToTop];
+}
+
+- (void)updateRefreshControlLabel {
+    NSDate *lookbackDate = [[NSDate date] dateByAddingTimeInterval:0-(60*60*24*(lookbackDays+1))];
+    NSString *dateString = [NSDateFormatter localizedStringFromDate:lookbackDate
+                                                          dateStyle:NSDateFormatterShortStyle
+                                                          timeStyle:NSDateFormatterNoStyle];
+    refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"Pull to get messages for %@", dateString]];
 }
 
 - (void)sendMessage:(NSString *)content {
     [webSocketClient pushMessage: content];
 }
 
+- (void)scrollToBottom {
+    if ([[self.fetchedResultsController sections] count]) {
+        NSInteger section = [[self.fetchedResultsController sections] count]-1;
+        id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
+        NSInteger rows = [sectionInfo numberOfObjects];
+        NSIndexPath *scrollIndexPath = [NSIndexPath indexPathForRow:rows inSection:section];
+        [self.tableView scrollToRowAtIndexPath:scrollIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    }
+}
+
+- (void)scrollToTop {
+    if ([[self.fetchedResultsController sections] count]) {
+        NSIndexPath *scrollIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        [self.tableView scrollToRowAtIndexPath:scrollIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    }
+}
+
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UILabel *dayLabel = [[UILabel alloc] init];
-    [dayLabel setFrame: CGRectMake(0, 5, 320, 20)];
+    [dayLabel setFrame: CGRectMake(0, 5, tableView.frame.size.width - 10, 20)];
     [dayLabel setFont: [UIFont systemFontOfSize:10]];
     [dayLabel setTextColor:[UIColor lightGrayColor]];
     [dayLabel setTextAlignment:NSTextAlignmentCenter];
@@ -169,9 +211,10 @@
     MessageCell *messageCell = (MessageCell*)cell;
     [messageCell.textDeviceName setText: from.name];
     [messageCell.textMessageContent setText: message.content];
-    [messageCell.deviceImage setImage:[UIImage imageNamed:@"apple_icon"]];
     
-    NSLog(@"sent: %@", [message.sent description]);
+    NSString *imageString = [NSString stringWithFormat:@"%@_icon", from.type];
+    [messageCell.deviceImage setImage:[UIImage imageNamed:imageString]];
+    
     NSString *dateString = [NSDateFormatter localizedStringFromDate:message.sent
                                                           dateStyle:NSDateFormatterNoStyle
                                                           timeStyle:NSDateFormatterShortStyle];
@@ -205,6 +248,7 @@
             
         case NSFetchedResultsChangeInsert:
             [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            self.insertedIndexPath = newIndexPath;
             break;
             
         case NSFetchedResultsChangeDelete:
@@ -234,12 +278,22 @@
         case NSFetchedResultsChangeDelete:
             [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
             break;
+            
+        default:
+            break;
     }
 }
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     // The fetch controller has sent all current change notifications, so tell the table view to process all updates.
     [self.tableView endUpdates];
+    if([[self.fetchedResultsController sections] count]>0){
+        [self.textEmpty setHidden: YES];
+    }
+    if (self.insertedIndexPath) {
+        [self.tableView scrollToRowAtIndexPath:self.insertedIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        self.insertedIndexPath = nil;
+    }
 }
 
 @end

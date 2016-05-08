@@ -9,9 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 
+#import "EchoWebServiceClient.h"
 #import "EchoWebSocketClient.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, EchoWebServiceClientDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 

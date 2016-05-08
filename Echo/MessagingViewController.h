@@ -15,5 +15,6 @@
 
 @property (weak, nonatomic) EchoWebSocketClient *webSocketClient;
 @property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
+@property (weak, nonatomic) IBOutlet UILabel *textEmpty;
 
 @end

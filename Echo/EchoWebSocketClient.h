@@ -15,8 +15,8 @@
 @protocol EchoWebSocketClientDelegate <NSObject>
 
 @optional
-- (void)socketDidOpen;
-- (void)socketFailedSetup;
+- (void)connectFinished;
+- (void)connectFailed:(NSString*)reason;
 
 - (void)pushMessageFinished;
 - (void)pushMessageFailed:(NSString*)reason;

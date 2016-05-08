@@ -16,5 +16,6 @@
 @dynamic id;
 @dynamic name;
 @dynamic messages;
+@dynamic type;
 
 @end

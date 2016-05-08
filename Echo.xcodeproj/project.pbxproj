@@ -32,6 +32,8 @@
 		F0B487FD1CDD629000C6AE6C /* Session.m in Sources */ = {isa = PBXBuildFile; fileRef = F0B487FC1CDD629000C6AE6C /* Session.m */; };
 		F0B488021CDE3C1000C6AE6C /* Message+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F0B487FF1CDE3C1000C6AE6C /* Message+CoreDataProperties.m */; };
 		F0B488031CDE3C1000C6AE6C /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = F0B488011CDE3C1000C6AE6C /* Message.m */; };
+		F0B488061CDEAE5800C6AE6C /* EchoButtonPrimary.m in Sources */ = {isa = PBXBuildFile; fileRef = F0B488051CDEAE5800C6AE6C /* EchoButtonPrimary.m */; };
+		F0B488091CDEB2D800C6AE6C /* EchoTextFieldForm.m in Sources */ = {isa = PBXBuildFile; fileRef = F0B488081CDEB2D800C6AE6C /* EchoTextFieldForm.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,6 +104,10 @@
 		F0B487FF1CDE3C1000C6AE6C /* Message+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Message+CoreDataProperties.m"; sourceTree = "<group>"; };
 		F0B488001CDE3C1000C6AE6C /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
 		F0B488011CDE3C1000C6AE6C /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
+		F0B488041CDEAE5800C6AE6C /* EchoButtonPrimary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EchoButtonPrimary.h; sourceTree = "<group>"; };
+		F0B488051CDEAE5800C6AE6C /* EchoButtonPrimary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EchoButtonPrimary.m; sourceTree = "<group>"; };
+		F0B488071CDEB2D800C6AE6C /* EchoTextFieldForm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EchoTextFieldForm.h; sourceTree = "<group>"; };
+		F0B488081CDEB2D800C6AE6C /* EchoTextFieldForm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EchoTextFieldForm.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -230,6 +236,10 @@
 				F0B487F61CDD4D3900C6AE6C /* MessageInputView.m */,
 				F0B487F81CDD50D500C6AE6C /* MessageTableView.h */,
 				F0B487F91CDD50D500C6AE6C /* MessageTableView.m */,
+				F0B488041CDEAE5800C6AE6C /* EchoButtonPrimary.h */,
+				F0B488051CDEAE5800C6AE6C /* EchoButtonPrimary.m */,
+				F0B488071CDEB2D800C6AE6C /* EchoTextFieldForm.h */,
+				F0B488081CDEB2D800C6AE6C /* EchoTextFieldForm.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -575,8 +585,10 @@
 				F0A534BE1CDB4EEE00A6D83A /* main.m in Sources */,
 				F0B488031CDE3C1000C6AE6C /* Message.m in Sources */,
 				F0A535071CDCCDD900A6D83A /* EchoWebServiceClient.h in Sources */,
+				F0B488091CDEB2D800C6AE6C /* EchoTextFieldForm.m in Sources */,
 				F0B487F11CDD3CC900C6AE6C /* Participant+CoreDataProperties.m in Sources */,
 				F0B487F21CDD3CC900C6AE6C /* Participant.m in Sources */,
+				F0B488061CDEAE5800C6AE6C /* EchoButtonPrimary.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

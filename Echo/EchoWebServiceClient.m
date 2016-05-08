@@ -21,10 +21,48 @@
 
 @synthesize delegate;
 
+- (void)logoutSessionToken:(NSString *)sessionToken deviceToken:(NSString *)deviceToken {
+    
+    NSURL *logoutUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@logout", API_URL_STRING]];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:logoutUrl];
+    request.HTTPMethod = @"POST";
+    [request setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    
+    NSData* jsonData = [NSJSONSerialization dataWithJSONObject: @{
+                                                                  @"session_token": sessionToken,
+                                                                  @"device_token": deviceToken
+                                                                }
+                                                       options:0
+                                                         error:nil];
+    request.HTTPBody = jsonData;
+    
+    
+    [self executeRequest:request successHandler:^(NSDictionary *response) {
+        BOOL success = [[response objectForKey:@"success"] boolValue];
+        if (success) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if([delegate respondsToSelector:@selector(logoutSuccessful)]) {
+                    [delegate logoutSuccessful];
+                }
+            });
+        } else {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if([delegate respondsToSelector:@selector(logoutFailed:)]) {
+                    [delegate logoutFailed:@"Couldn't logout - probably already logged out"];
+                }
+            });
+        }
+    }];
+}
+
 - (void)loginUsername:(NSString*)username
              password:(NSString*)password
            deviceName:(NSString*)deviceName
           deviceToken:(NSString *)deviceToken {
+    
+    username = [username stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    deviceName = [deviceName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     
     NSURL *loginUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@login", API_URL_STRING]];
     
@@ -35,8 +73,12 @@
     NSData* jsonData = [NSJSONSerialization dataWithJSONObject: @{
                                                                   @"name": username,
                                                                   @"password": password,
-                                                                  @"device_token": deviceToken,
-                                                                  @"device_name": deviceName
+                                                                  @"device": @{
+                                                                    @"token": deviceToken,
+                                                                    @"name": deviceName,
+                                                                    @"type": @"iOS"
+                                                                  },
+                                                                  @"timezone": [[NSTimeZone localTimeZone] name]
                                                                 }
                                                        options:0
                                                          error:nil];
@@ -52,7 +94,7 @@
                                                                                       @"deviceToken":deviceToken}];
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+                    AppDelegate *appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
                     
                     Session *session = [Session sessionWithUsername: username
                                                        sessionToken: [response objectForKey:@"session_token"]
@@ -66,10 +108,11 @@
         } else {
             if ([delegate respondsToSelector:@selector(loginFailed:)]) {
                 NSString *failureReason = [response objectForKey:@"message"];
+                failureReason = failureReason == nil ? @"Unknown reason for failure" : failureReason;
                 [Answers logCustomEventWithName:@"Login Failed" customAttributes:@{@"username":username,
                                                                                    @"deviceName":deviceName,
                                                                                    @"deviceToken":deviceToken,
-                                                                                   @"reason":failureReason}];
+                                                                                   @"reason": failureReason}];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [delegate loginFailed:failureReason];
                 });

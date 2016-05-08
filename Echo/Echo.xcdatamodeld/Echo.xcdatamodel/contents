@@ -9,10 +9,11 @@
     <entity name="Participant" representedClassName="Participant" syncable="YES">
         <attribute name="id" attributeType="Integer 32" defaultValueString="0" indexed="YES" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="messages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" inverseName="from" inverseEntity="Message" syncable="YES"/>
     </entity>
     <elements>
         <element name="Message" positionX="-36" positionY="27" width="128" height="105"/>
-        <element name="Participant" positionX="-54" positionY="18" width="128" height="90"/>
+        <element name="Participant" positionX="-54" positionY="18" width="128" height="105"/>
     </elements>
 </model>
