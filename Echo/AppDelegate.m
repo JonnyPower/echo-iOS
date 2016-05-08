@@ -32,6 +32,8 @@
     AuthenticationViewController *authController = [navController.viewControllers objectAtIndex:0];
     authController.webSocketClient = _webSocketClient;
     
+    navController.navigationBar.barStyle = UIBarStyleBlack;
+    
     return YES;
 }
 

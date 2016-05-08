@@ -15,12 +15,60 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="name_title" translatesAutoresizingMaskIntoConstraints="NO" id="tki-KH-NRK">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="250" id="NQ1-yN-QGJ"/>
+                                    <constraint firstAttribute="height" constant="72" id="z32-x1-3Yw"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="NQ1-yN-QGJ"/>
+                                        <exclude reference="z32-x1-3Yw"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="NQ1-yN-QGJ"/>
+                                        <include reference="z32-x1-3Yw"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="tki-KH-NRK" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="cYD-0E-Enh"/>
+                            <constraint firstItem="tki-KH-NRK" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="hHW-mf-LZ3"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="tki-KH-NRK"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="cYD-0E-Enh"/>
+                                <exclude reference="hHW-mf-LZ3"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="tki-KH-NRK"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="cYD-0E-Enh"/>
+                                <include reference="hHW-mf-LZ3"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+                    <nil key="simulatedTopBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="52.5" y="390"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="name_title" width="250" height="72"/>
+    </resources>
 </document>

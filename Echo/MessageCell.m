@@ -15,14 +15,4 @@
 @synthesize textDeviceName;
 @synthesize textSent;
 
-- (id)init {
-    self = [super init];
-    
-    if(self) {
-        self.selectionStyle = UITableViewCellSelectionStyleNone;
-    }
-    
-    return self;
-}
-
 @end

@@ -75,7 +75,11 @@
     refreshControl = [[UIRefreshControl alloc]init];
     [self.tableView addSubview:refreshControl];
     [refreshControl addTarget:self action:@selector(actionHistroy:) forControlEvents:UIControlEventValueChanged];
+    [refreshControl setTintColor:[UIColor whiteColor]];
     [self updateRefreshControlLabel];
+    
+    self.tableView.backgroundView = nil;
+    self.tableView.backgroundColor = [UIColor darkGrayColor];
 }
 
 - (void)viewDidUnload {
@@ -133,7 +137,7 @@
     NSString *dateString = [NSDateFormatter localizedStringFromDate:lookbackDate
                                                           dateStyle:NSDateFormatterShortStyle
                                                           timeStyle:NSDateFormatterNoStyle];
-    refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"Pull to get messages for %@", dateString]];
+    refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"Pull to get messages for %@", dateString] attributes: @{NSForegroundColorAttributeName:[UIColor whiteColor]}];
 }
 
 - (void)sendMessage:(NSString *)content {
@@ -209,6 +213,7 @@
     Participant *from = message.from;
     
     MessageCell *messageCell = (MessageCell*)cell;
+    [messageCell setBackgroundColor:[UIColor clearColor]];
     [messageCell.textDeviceName setText: from.name];
     [messageCell.textMessageContent setText: message.content];
     
@@ -225,14 +230,14 @@
     
     Message *message = [fetchedResultsController objectAtIndexPath:indexPath];
     //
-    CGRect messageBoundingRect = [message.content boundingRectWithSize:CGSizeMake([[UIScreen mainScreen] bounds].size.width - 14, 0)
+    CGRect messageBoundingRect = [message.content boundingRectWithSize:CGSizeMake([[UIScreen mainScreen] bounds].size.width - 40, 0)
                                                                options:(NSStringDrawingUsesLineFragmentOrigin)
-                                                            attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:16.0f]}
+                                                            attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:12.0f]}
                                                                context:nil];
     if([message.content isEqualToString:@"Testing a really long message so that I have to write the logic for taller cells in the table view! Blah blah blah blah!"]) {
         NSLog(@"Long string");
     }
-    return ceilf(messageBoundingRect.size.height + 32);
+    return ceilf(messageBoundingRect.size.height + 58);
 }
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
