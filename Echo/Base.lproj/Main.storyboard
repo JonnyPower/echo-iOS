@@ -101,7 +101,9 @@
                                     <constraint firstItem="u7N-qk-cC0" firstAttribute="centerX" secondItem="63z-dl-ahz" secondAttribute="centerX" id="7EH-XK-AgW"/>
                                     <constraint firstItem="Cuy-Nv-dZM" firstAttribute="centerX" secondItem="63z-dl-ahz" secondAttribute="centerX" id="9nn-NY-eHD"/>
                                     <constraint firstItem="xvp-CW-M7n" firstAttribute="centerX" secondItem="63z-dl-ahz" secondAttribute="centerX" id="BJf-nD-SR4"/>
-                                    <constraint firstItem="kZ7-qc-xQC" firstAttribute="centerY" secondItem="63z-dl-ahz" secondAttribute="centerY" id="MyI-M8-r2x"/>
+                                    <constraint firstItem="kZ7-qc-xQC" firstAttribute="centerY" secondItem="63z-dl-ahz" secondAttribute="centerY" id="MyI-M8-r2x">
+                                        <variation key="heightClass=compact-widthClass=compact" constant="25"/>
+                                    </constraint>
                                     <constraint firstItem="kZ7-qc-xQC" firstAttribute="centerX" secondItem="63z-dl-ahz" secondAttribute="centerX" id="Nfv-he-gX8"/>
                                     <constraint firstItem="tAu-za-M91" firstAttribute="centerX" secondItem="63z-dl-ahz" secondAttribute="centerX" id="ZKe-fH-gV8"/>
                                     <constraint firstItem="RKB-DE-hAM" firstAttribute="centerX" secondItem="63z-dl-ahz" secondAttribute="centerX" id="aAC-5M-foH"/>
@@ -137,7 +139,7 @@
                                 </variation>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="name_title" translatesAutoresizingMaskIntoConstraints="NO" id="hEX-mb-Jnc">
-                                <rect key="frame" x="175" y="60" width="250" height="72"/>
+                                <rect key="frame" x="175" y="75" width="250" height="72"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="72" id="b1d-Vo-Qv4"/>
                                     <constraint firstAttribute="width" constant="250" id="obS-j0-bBk"/>
@@ -163,6 +165,7 @@
                             <constraint firstItem="63z-dl-ahz" firstAttribute="leading" secondItem="hEX-mb-Jnc" secondAttribute="trailing" constant="-25" id="Imd-wW-dow">
                                 <variation key="heightClass=compact" constant="15"/>
                             </constraint>
+                            <constraint firstItem="hEX-mb-Jnc" firstAttribute="top" relation="greaterThanOrEqual" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="10" id="NTt-DZ-gXn"/>
                             <constraint firstItem="su2-9J-NUe" firstAttribute="top" secondItem="hEX-mb-Jnc" secondAttribute="bottom" constant="135" id="NUh-Bd-OT0">
                                 <variation key="heightClass=compact" constant="20"/>
                             </constraint>
@@ -175,14 +178,16 @@
                             </constraint>
                             <constraint firstItem="63z-dl-ahz" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Tea-EI-7Ip">
                                 <variation key="heightClass=compact" constant="100"/>
+                                <variation key="heightClass=compact-widthClass=compact" constant="0.0"/>
                             </constraint>
                             <constraint firstItem="su2-9J-NUe" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="iSg-jB-ObC"/>
                             <constraint firstItem="su2-9J-NUe" firstAttribute="centerX" secondItem="hEX-mb-Jnc" secondAttribute="centerX" id="nPs-2T-PTP"/>
-                            <constraint firstItem="63z-dl-ahz" firstAttribute="top" secondItem="hEX-mb-Jnc" secondAttribute="bottom" constant="40" id="pJy-Ce-vNo"/>
+                            <constraint firstItem="63z-dl-ahz" firstAttribute="top" secondItem="hEX-mb-Jnc" secondAttribute="bottom" priority="750" constant="25" id="pJy-Ce-vNo"/>
                             <constraint firstItem="63z-dl-ahz" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="tKn-qh-mVh"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="NTt-DZ-gXn"/>
                                 <exclude reference="NVN-lE-HQ7"/>
                                 <exclude reference="Imd-wW-dow"/>
                                 <exclude reference="OmK-pf-EyF"/>
@@ -201,6 +206,11 @@
                                 <exclude reference="Spi-Wd-LiO"/>
                                 <exclude reference="iSg-jB-ObC"/>
                                 <include reference="nPs-2T-PTP"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="constraints">
+                                <include reference="NTt-DZ-gXn"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
