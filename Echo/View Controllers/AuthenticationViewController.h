@@ -11,8 +11,9 @@
 #import "EchoWebServiceClient.h"
 #import "EchoWebSocketClient.h"
 #import "EchoButtonPrimary.h"
+#import "BaseViewController.h"
 
-@interface AuthenticationViewController : UIViewController <EchoWebServiceClientDelegate, EchoWebSocketClientDelegate>
+@interface AuthenticationViewController : BaseViewController <EchoWebServiceClientDelegate, EchoWebSocketClientDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *fieldDeviceName;
 @property (weak, nonatomic) IBOutlet UITextField *fieldUsername;

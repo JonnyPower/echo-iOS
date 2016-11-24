@@ -136,6 +136,13 @@
                                     </mask>
                                 </variation>
                             </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="name_title" translatesAutoresizingMaskIntoConstraints="NO" id="hEX-mb-Jnc">
+                                <rect key="frame" x="175" y="60" width="250" height="72"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="72" id="b1d-Vo-Qv4"/>
+                                    <constraint firstAttribute="width" constant="250" id="obS-j0-bBk"/>
+                                </constraints>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="su2-9J-NUe">
                                 <rect key="frame" x="248" y="467" width="103" height="28"/>
                                 <constraints>
@@ -147,13 +154,6 @@
                                     <color key="titleColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="name_title" translatesAutoresizingMaskIntoConstraints="NO" id="hEX-mb-Jnc">
-                                <rect key="frame" x="175" y="60" width="250" height="72"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="72" id="b1d-Vo-Qv4"/>
-                                    <constraint firstAttribute="width" constant="250" id="obS-j0-bBk"/>
-                                </constraints>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -206,8 +206,8 @@
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
                                 <include reference="63z-dl-ahz"/>
-                                <include reference="su2-9J-NUe"/>
                                 <include reference="hEX-mb-Jnc"/>
+                                <include reference="su2-9J-NUe"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="30n-ol-tSH"/>

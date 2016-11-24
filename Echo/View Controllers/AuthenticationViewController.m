@@ -12,8 +12,6 @@
 
 #import <Crashlytics/Crashlytics.h>
 
-#define RGB(r, g, b) [UIColor colorWithRed:r/225.0f green:g/225.0f blue:b/225.0f alpha:1]
-
 
 @interface AuthenticationViewController ()
 @property (weak, nonatomic) IBOutlet UIView *viewForm;
@@ -33,10 +31,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     [fieldDeviceName setText:[[UIDevice currentDevice] name]];
     
-    // 137, 202, 255
     [viewForm.layer setBorderColor: [UIColor darkGrayColor].CGColor];
     [viewForm.layer setBorderWidth: 1.5f];
     
@@ -47,6 +44,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear: animated];
     [fieldPassword setText: @""];
     [self.navigationController setNavigationBarHidden:YES];
 }
@@ -56,6 +54,8 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear: animated];
+    
     [webSocketClient addDelegate: self];
     
     AppDelegate *appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
