@@ -125,9 +125,9 @@
 		F03D24F91DE7916C00CD2225 /* test.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = test.plist; sourceTree = "<group>"; };
 		F03D24FB1DE7917500CD2225 /* prod.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = prod.plist; sourceTree = "<group>"; };
 		F03D25221DE791DA00CD2225 /* Echo Dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Echo Dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F03D25231DE791DA00CD2225 /* Dev-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Dev-Info.plist"; path = "/Users/jonnypower/Documents/JonnyPower/echo/echo-iOS/Dev-Info.plist"; sourceTree = "<absolute>"; };
+		F03D25231DE791DA00CD2225 /* Dev-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Dev-Info.plist"; sourceTree = "<group>"; };
 		F03D25491DE791E600CD2225 /* Echo Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Echo Test.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F03D254A1DE791E600CD2225 /* Test-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Test-Info.plist"; path = "/Users/jonnypower/Documents/JonnyPower/echo/echo-iOS/Test-Info.plist"; sourceTree = "<absolute>"; };
+		F03D254A1DE791E600CD2225 /* Test-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Test-Info.plist"; sourceTree = "<group>"; };
 		F03D254B1DE7956500CD2225 /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		F03D254C1DE7956500CD2225 /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		F0A534B91CDB4EEE00A6D83A /* Echo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Echo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -300,6 +300,7 @@
 				F0A534BF1CDB4EEE00A6D83A /* AppDelegate.h */,
 				F0A534C01CDB4EEE00A6D83A /* AppDelegate.m */,
 				F0A534C51CDB4EEE00A6D83A /* Main.storyboard */,
+				F0A534CD1CDB4EEE00A6D83A /* LaunchScreen.storyboard */,
 				F0A534BC1CDB4EEE00A6D83A /* Supporting Files */,
 			);
 			path = Echo;
@@ -311,10 +312,9 @@
 				F0A534D01CDB4EEE00A6D83A /* Live-Info.plist */,
 				F03D25231DE791DA00CD2225 /* Dev-Info.plist */,
 				F03D254A1DE791E600CD2225 /* Test-Info.plist */,
-				F0A534CD1CDB4EEE00A6D83A /* LaunchScreen.storyboard */,
 				F0A534BD1CDB4EEE00A6D83A /* main.m */,
 			);
-			name = "Supporting Files";
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		F0A534D81CDB4EEE00A6D83A /* EchoTests */ = {
