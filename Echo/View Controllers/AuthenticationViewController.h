@@ -15,14 +15,24 @@
 
 @interface AuthenticationViewController : BaseViewController <EchoWebServiceClientDelegate, EchoWebSocketClientDelegate>
 
-@property (weak, nonatomic) IBOutlet UITextField *fieldDeviceName;
-@property (weak, nonatomic) IBOutlet UITextField *fieldUsername;
-@property (weak, nonatomic) IBOutlet UITextField *fieldPassword;
-@property (weak, nonatomic) IBOutlet UILabel *textAlert;
-@property (weak, nonatomic) EchoWebSocketClient *webSocketClient;
+@property (weak, nonatomic) IBOutlet UITextField *fieldLoginDeviceName;
+@property (weak, nonatomic) IBOutlet UITextField *fieldLoginUsername;
+@property (weak, nonatomic) IBOutlet UITextField *fieldLoginPassword;
+@property (weak, nonatomic) IBOutlet UIView *viewLoginDarken;
+@property (weak, nonatomic) IBOutlet UILabel *textLoginAlert;
 @property (weak, nonatomic) IBOutlet EchoButtonPrimary *buttonLogin;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinnerLogin;
-@property (weak, nonatomic) IBOutlet UIView *viewDarken;
+
+@property (weak, nonatomic) IBOutlet UITextField *fieldRegisterUsername;
+@property (weak, nonatomic) IBOutlet UITextField *fieldRegisterPassword;
+@property (weak, nonatomic) IBOutlet UITextField *fieldRegisterConfirmPassword;
+@property (weak, nonatomic) IBOutlet UIView *viewRegisterDarken;
+@property (weak, nonatomic) IBOutlet UILabel *textRegisterAlert;
+@property (weak, nonatomic) IBOutlet UIButton *buttonRegister;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinnerRegister;
+
+
+@property (weak, nonatomic) EchoWebSocketClient *webSocketClient;
 
 - (IBAction)actionLogin:(id)sender;
 
