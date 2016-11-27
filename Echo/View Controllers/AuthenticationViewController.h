@@ -13,7 +13,7 @@
 #import "EchoButtonPrimary.h"
 #import "BaseViewController.h"
 
-@interface AuthenticationViewController : BaseViewController <EchoWebServiceClientDelegate, EchoWebSocketClientDelegate>
+@interface AuthenticationViewController : BaseViewController <EchoWebServiceClientDelegate, EchoWebSocketClientDelegate, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *fieldLoginDeviceName;
 @property (weak, nonatomic) IBOutlet UITextField *fieldLoginUsername;
@@ -35,6 +35,7 @@
 @property (weak, nonatomic) EchoWebSocketClient *webSocketClient;
 
 - (IBAction)actionLogin:(id)sender;
+- (IBAction)actionRegister:(id)sender;
 
 @end
 

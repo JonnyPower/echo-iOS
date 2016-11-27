@@ -9,6 +9,7 @@
 #import "AuthenticationViewController.h"
 #import "MessagingViewController.h"
 #import "AppDelegate.h"
+#import "Helpers.h"
 
 #import <Crashlytics/Crashlytics.h>
 
@@ -50,14 +51,8 @@ typedef enum : NSUInteger {
 @synthesize btnNeedAccountOrLogin;
 @synthesize webSocketClient;
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    [fieldLoginDeviceName setText:[[UIDevice currentDevice] name]];
-    
-    [self styleFormView:viewLoginForm];
-    [self styleFormView:viewRegisterForm];
-}
+#pragma mark -
+#pragma mark AuthenticationViewController
 
 - (void)styleFormView:(UIView*)formView {
     [formView.layer setBorderColor: [UIColor darkGrayColor].CGColor];
@@ -69,24 +64,16 @@ typedef enum : NSUInteger {
     [formView.layer setShadowOffset: CGSizeZero];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear: animated];
-    [fieldLoginPassword setText: @""];
-    [self.navigationController setNavigationBarHidden:YES];
-    
-    [self setViewState:AuthenticationViewControllerViewStateLogin];
-}
-
 - (void)setViewState:(AuthenticationViewControllerViewState)viewState {
     _viewState = viewState;
     [self animateViewState: self.view.frame.size.width];
 }
 
 - (void)animateViewState:(CGFloat)width {
-    
     [btnNeedAccountOrLogin setTitle:self.viewState == AuthenticationViewControllerViewStateLogin ? @"Need an account?" : @"Have an account?" forState:UIControlStateNormal];
     
     [self.constraintXRegisterToLoginX setConstant:width];
+    
     [self.view layoutIfNeeded];
     
     [UIView animateWithDuration:0.2f
@@ -100,15 +87,36 @@ typedef enum : NSUInteger {
                                  break;
                          }
                          [self.view layoutIfNeeded];
+                     } completion:^(BOOL finished) {
                      }];
-}
-
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-    [self animateViewState: size.width];
 }
 
 - (AuthenticationViewControllerViewState)viewState {
     return _viewState;
+}
+
+#pragma mark -
+#pragma mark UIViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    [fieldLoginDeviceName setText:[[UIDevice currentDevice] name]];
+    
+    [self styleFormView:viewLoginForm];
+    [self styleFormView:viewRegisterForm];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear: animated];
+    [fieldLoginPassword setText: @""];
+    [self.navigationController setNavigationBarHidden:YES];
+    
+    [self setViewState:AuthenticationViewControllerViewStateLogin];
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [self animateViewState: size.width];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -138,6 +146,17 @@ typedef enum : NSUInteger {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if([segue.identifier isEqualToString:@"messaging"]) {
+        MessagingViewController *messagingVC = segue.destinationViewController;
+        messagingVC.webSocketClient = self.webSocketClient;
+        messagingVC.managedObjectContext = ((AppDelegate*)[UIApplication sharedApplication].delegate).managedObjectContext;
+    }
+}
+
+#pragma mark -
+#pragma mark IBAction
 
 - (IBAction)actionToggleViewState:(id)sender {
     if(self.viewState == AuthenticationViewControllerViewStateLogin) {
@@ -193,6 +212,34 @@ typedef enum : NSUInteger {
     }];
 }
 
+#pragma mark -
+#pragma mark UITextFieldDelegate
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    return YES;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    if([textField isEqual:fieldLoginDeviceName]) {
+        [fieldLoginUsername becomeFirstResponder];
+    }
+    if([textField isEqual:fieldLoginUsername]) {
+        [fieldLoginPassword becomeFirstResponder];
+    }
+    if([textField isEqual:fieldLoginPassword] && !IS_EMPTY(fieldLoginDeviceName.text) && !IS_EMPTY(fieldLoginUsername.text)) {
+        [self.buttonLogin sendActionsForControlEvents:UIControlEventTouchUpInside];
+    }
+    return YES;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+
+}
+
+#pragma mark -
+#pragma mark EchoWebServiceClientDelegate
+
 - (void)requestFailed:(NSError *)error {
     
 }
@@ -223,6 +270,9 @@ typedef enum : NSUInteger {
     [self stopSpinner:spinnerRegister darkenView:viewRegisterDarken];
 }
 
+#pragma mark -
+#pragma mark EchoWebSocketClientDelegate
+
 - (void)connectFinished {
     [self performSegueWithIdentifier: @"messaging" sender: self];
     [self stopSpinner:spinnerLogin darkenView:viewLoginDarken];
@@ -231,14 +281,6 @@ typedef enum : NSUInteger {
 - (void)connectFailed:(NSString*)reason {
     [textLoginAlert setText: reason];
     [textLoginAlert setHidden: NO];
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if([segue.identifier isEqualToString:@"messaging"]) {
-        MessagingViewController *messagingVC = segue.destinationViewController;
-        messagingVC.webSocketClient = self.webSocketClient;
-        messagingVC.managedObjectContext = ((AppDelegate*)[UIApplication sharedApplication].delegate).managedObjectContext;
-    }
 }
 
 @end
