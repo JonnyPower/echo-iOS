@@ -150,6 +150,9 @@
     socket.delegate = self;
 }
 
+#pragma mark -
+#pragma mark PhxSocketDelegate
+
 - (void)phxSocketDidOpen {
     NSLog(@"socket open");
 }
@@ -173,6 +176,17 @@
         [((AppDelegate*)[UIApplication sharedApplication].delegate) logout];
         NSLog(@"socket close: %@", [error description]);
     }
+}
+
+#pragma mark -
+#pragma mark PhxChannelDelegate
+
+- (void)phxChannelClosed {
+    
+}
+
+- (void)phxChannelDidReceiveError:(id)error {
+    
 }
 
 - (void)saveMessage:(NSDictionary*)messageDictionary {

@@ -37,6 +37,15 @@
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="emptyAllowed" value="NO"/>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="minimumLength">
+                                                <integer key="value" value="3"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="maximumLength">
+                                                <integer key="value" value="20"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <outlet property="delegate" destination="BYZ-38-t0r" id="07a-Yf-drj"/>
                                         </connections>
@@ -50,6 +59,15 @@
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="emptyAllowed" value="NO"/>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="minimumLength">
+                                                <integer key="value" value="3"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="maximumLength">
+                                                <integer key="value" value="20"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <outlet property="delegate" destination="BYZ-38-t0r" id="6Rr-oF-0TV"/>
                                         </connections>
@@ -63,11 +81,20 @@
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="emptyAllowed" value="NO"/>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="minimumLength">
+                                                <integer key="value" value="6"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="maximumLength">
+                                                <integer key="value" value="20"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <outlet property="delegate" destination="BYZ-38-t0r" id="BHG-ef-CW0"/>
                                         </connections>
                                     </textField>
-                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A user with that name is not registered" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cuy-Nv-dZM">
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A user with that name is not registered" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cuy-Nv-dZM">
                                         <rect key="frame" x="20" y="175" width="260" height="12"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="260" id="qAz-nF-95e"/>
@@ -113,6 +140,7 @@
                                     <constraint firstItem="tAu-za-M91" firstAttribute="centerX" secondItem="63z-dl-ahz" secondAttribute="centerX" id="ZKe-fH-gV8"/>
                                     <constraint firstItem="RKB-DE-hAM" firstAttribute="centerX" secondItem="63z-dl-ahz" secondAttribute="centerX" id="aAC-5M-foH"/>
                                     <constraint firstItem="u7N-qk-cC0" firstAttribute="top" secondItem="URF-AL-v1e" secondAttribute="bottom" constant="8" id="drT-A8-qKw"/>
+                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="RKB-DE-hAM" secondAttribute="bottom" constant="20" id="ep7-i4-kmn"/>
                                     <constraint firstItem="kZ7-qc-xQC" firstAttribute="width" secondItem="63z-dl-ahz" secondAttribute="width" id="hF4-58-ESz"/>
                                     <constraint firstItem="URF-AL-v1e" firstAttribute="centerX" secondItem="63z-dl-ahz" secondAttribute="centerX" id="i2y-35-Eny"/>
                                     <constraint firstItem="EWP-Br-XDC" firstAttribute="centerY" secondItem="63z-dl-ahz" secondAttribute="centerY" id="jBY-aP-rmT"/>
@@ -124,7 +152,7 @@
                                     <constraint firstItem="Cuy-Nv-dZM" firstAttribute="top" secondItem="u7N-qk-cC0" secondAttribute="bottom" constant="8" id="v32-F9-mU8"/>
                                     <constraint firstItem="EWP-Br-XDC" firstAttribute="top" secondItem="tAu-za-M91" secondAttribute="bottom" constant="18" id="wAa-ss-ibE"/>
                                     <constraint firstItem="EWP-Br-XDC" firstAttribute="centerX" secondItem="63z-dl-ahz" secondAttribute="centerX" id="zDh-JQ-STQ"/>
-                                    <constraint firstAttribute="height" constant="255" id="zV9-2b-eIA"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="255" id="zV9-2b-eIA"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="5"/>
@@ -161,6 +189,15 @@
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="emptyAllowed" value="NO"/>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="minimumLength">
+                                                <integer key="value" value="3"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="maximumLength">
+                                                <integer key="value" value="20"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <outlet property="delegate" destination="BYZ-38-t0r" id="3tM-3z-MUU"/>
                                         </connections>
@@ -174,6 +211,15 @@
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="emptyAllowed" value="NO"/>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="minimumLength">
+                                                <integer key="value" value="6"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="maximumLength">
+                                                <integer key="value" value="20"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <outlet property="delegate" destination="BYZ-38-t0r" id="9su-ia-uVh"/>
                                         </connections>
@@ -187,11 +233,20 @@
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="emptyAllowed" value="NO"/>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="minimumLength">
+                                                <integer key="value" value="6"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="maximumLength">
+                                                <integer key="value" value="20"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <outlet property="delegate" destination="BYZ-38-t0r" id="EcS-V9-gF1"/>
                                         </connections>
                                     </textField>
-                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A user with that name is not registered" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BbG-J3-uWI">
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A user with that name is not registered" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BbG-J3-uWI">
                                         <rect key="frame" x="20" y="175" width="260" height="12"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="260" id="yag-Xq-ZYb"/>
@@ -226,9 +281,10 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="Hu6-lt-HuN" firstAttribute="centerX" secondItem="UZa-Gh-mBp" secondAttribute="centerX" id="2aD-b3-gsp"/>
-                                    <constraint firstAttribute="height" constant="255" id="2ll-ke-wU7"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="255" id="2ll-ke-wU7"/>
                                     <constraint firstItem="X5F-FO-lMr" firstAttribute="top" secondItem="IeR-HY-wA0" secondAttribute="bottom" constant="8" id="62w-Y5-YDD"/>
                                     <constraint firstItem="BbG-J3-uWI" firstAttribute="centerX" secondItem="UZa-Gh-mBp" secondAttribute="centerX" id="7oM-C6-hrE"/>
+                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="od2-Kd-fgc" secondAttribute="bottom" constant="20" id="8E2-e4-2Ed"/>
                                     <constraint firstItem="sFN-Oz-2To" firstAttribute="top" secondItem="X5F-FO-lMr" secondAttribute="bottom" constant="8" id="9HM-V5-Sm5"/>
                                     <constraint firstItem="X5F-FO-lMr" firstAttribute="centerX" secondItem="UZa-Gh-mBp" secondAttribute="centerX" id="H1d-lA-Xc7"/>
                                     <constraint firstItem="od2-Kd-fgc" firstAttribute="centerX" secondItem="UZa-Gh-mBp" secondAttribute="centerX" id="LSl-Yy-1LC"/>

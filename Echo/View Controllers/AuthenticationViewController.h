@@ -13,19 +13,21 @@
 #import "EchoButtonPrimary.h"
 #import "BaseViewController.h"
 
+@class EchoTextFieldForm;
+
 @interface AuthenticationViewController : BaseViewController <EchoWebServiceClientDelegate, EchoWebSocketClientDelegate, UITextFieldDelegate>
 
-@property (weak, nonatomic) IBOutlet UITextField *fieldLoginDeviceName;
-@property (weak, nonatomic) IBOutlet UITextField *fieldLoginUsername;
-@property (weak, nonatomic) IBOutlet UITextField *fieldLoginPassword;
+@property (weak, nonatomic) IBOutlet EchoTextFieldForm *fieldLoginDeviceName;
+@property (weak, nonatomic) IBOutlet EchoTextFieldForm *fieldLoginUsername;
+@property (weak, nonatomic) IBOutlet EchoTextFieldForm *fieldLoginPassword;
 @property (weak, nonatomic) IBOutlet UIView *viewLoginDarken;
 @property (weak, nonatomic) IBOutlet UILabel *textLoginAlert;
 @property (weak, nonatomic) IBOutlet EchoButtonPrimary *buttonLogin;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinnerLogin;
 
-@property (weak, nonatomic) IBOutlet UITextField *fieldRegisterUsername;
-@property (weak, nonatomic) IBOutlet UITextField *fieldRegisterPassword;
-@property (weak, nonatomic) IBOutlet UITextField *fieldRegisterConfirmPassword;
+@property (weak, nonatomic) IBOutlet EchoTextFieldForm *fieldRegisterUsername;
+@property (weak, nonatomic) IBOutlet EchoTextFieldForm *fieldRegisterPassword;
+@property (weak, nonatomic) IBOutlet EchoTextFieldForm *fieldRegisterConfirmPassword;
 @property (weak, nonatomic) IBOutlet UIView *viewRegisterDarken;
 @property (weak, nonatomic) IBOutlet UILabel *textRegisterAlert;
 @property (weak, nonatomic) IBOutlet UIButton *buttonRegister;

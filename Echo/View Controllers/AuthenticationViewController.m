@@ -10,6 +10,8 @@
 #import "MessagingViewController.h"
 #import "AppDelegate.h"
 #import "Helpers.h"
+#import "EchoTextFieldForm.h"
+#import "EchoTextFieldValidationError.h"
 
 #import <Crashlytics/Crashlytics.h>
 
@@ -69,6 +71,10 @@ typedef enum : NSUInteger {
     [self animateViewState: self.view.frame.size.width];
 }
 
+- (AuthenticationViewControllerViewState)viewState {
+    return _viewState;
+}
+
 - (void)animateViewState:(CGFloat)width {
     [btnNeedAccountOrLogin setTitle:self.viewState == AuthenticationViewControllerViewStateLogin ? @"Need an account?" : @"Have an account?" forState:UIControlStateNormal];
     
@@ -91,8 +97,68 @@ typedef enum : NSUInteger {
                      }];
 }
 
-- (AuthenticationViewControllerViewState)viewState {
-    return _viewState;
+- (UIActivityIndicatorView*)currentSpinner {
+    return self.viewState == AuthenticationViewControllerViewStateLogin ? spinnerLogin : spinnerRegister;
+}
+
+- (UILabel*)currentAlertText {
+    return self.viewState == AuthenticationViewControllerViewStateLogin ? textLoginAlert : textRegisterAlert;
+}
+
+- (UIView*)currentDarkenView {
+    return self.viewState == AuthenticationViewControllerViewStateLogin ? viewLoginDarken : viewRegisterDarken;
+}
+
+- (void)startCurrentSpinner {
+    [self startSpinner:[self currentSpinner] darkenView:[self currentDarkenView]];
+}
+
+- (void)stopCurrentSpinner {
+    [self stopSpinner:[self currentSpinner] darkenView:[self currentDarkenView]];
+}
+
+- (void)startSpinner:(UIActivityIndicatorView*)spinner darkenView:(UIView*)darkenView {
+    [btnNeedAccountOrLogin setEnabled: NO];
+    [spinner setAlpha: 1.0];
+    [UIView animateWithDuration:2 animations:^{
+        [spinner startAnimating];
+        [spinner setHidden: NO];
+        [darkenView setHidden: NO];
+    }];
+}
+
+- (void)stopSpinner:(UIActivityIndicatorView*)spinner darkenView:(UIView*)darkenView {
+    [btnNeedAccountOrLogin setEnabled: YES];
+    [UIView animateWithDuration:2 animations:^{
+        [spinner stopAnimating];
+        [spinner setHidden: YES];
+        [spinner setAlpha: 0];
+        [darkenView setHidden: YES];
+    }];
+}
+
+- (void)showErrors:(NSArray<EchoTextFieldValidationError*>*)errors {
+    NSString *errorString = [NSString string];
+    for(EchoTextFieldValidationError *error in errors) {
+        [error.target setToErrorState];
+        NSLog(@"Got error: %@", [error reasonString]);
+        if(!IS_EMPTY(errorString)) {
+            errorString = [NSString stringWithFormat:@"%@\n", errorString];
+        }
+        errorString = [NSString stringWithFormat:@"%@%@", errorString, [error reasonString]];
+    }
+    [[self currentAlertText] setText: errorString];
+    [[self currentAlertText] setHidden: NO];
+}
+
+- (void)clearErrors {
+    for(EchoTextFieldForm *field in @[fieldLoginDeviceName, fieldLoginUsername, fieldLoginPassword, fieldRegisterUsername, fieldRegisterPassword, fieldRegisterConfirmPassword]) {
+        [field setToNormalState];
+    }
+    [textLoginAlert setText: @""];
+    [textLoginAlert setHidden: YES];
+    [textRegisterAlert setText: @""];
+    [textRegisterAlert setHidden: YES];
 }
 
 #pragma mark -
@@ -164,52 +230,47 @@ typedef enum : NSUInteger {
     } else {
         [self setViewState: AuthenticationViewControllerViewStateLogin];
     }
+    [self clearErrors];
 }
 
 - (IBAction)actionLogin:(id)sender {
-    EchoWebServiceClient *client = [[EchoWebServiceClient alloc] init];
-    client.delegate = self;
-    [client loginUsername: fieldLoginUsername.text
-                 password: fieldLoginPassword.text
-               deviceName: fieldLoginDeviceName.text
-              deviceToken: @"testing"];
-
-    [Answers logCustomEventWithName:@"Login Attempted" customAttributes:@{@"Username":fieldLoginUsername.text,
-                                                                          @"deviceName":fieldLoginDeviceName.text,
-                                                                          @"deviceToken":@"testing"}];
-    [self startSpinner:spinnerLogin darkenView:viewLoginDarken];
+    
+    NSArray<EchoTextFieldValidationError *> *errors = [EchoTextFieldValidationError validateFields:@[fieldLoginDeviceName, fieldLoginUsername, fieldLoginPassword]];
+    
+    if(IS_EMPTY(errors)) {
+        EchoWebServiceClient *client = [[EchoWebServiceClient alloc] init];
+        client.delegate = self;
+        [client loginUsername: fieldLoginUsername.text
+                     password: fieldLoginPassword.text
+                   deviceName: fieldLoginDeviceName.text
+                  deviceToken: @"testing"];
+        
+        [Answers logCustomEventWithName:@"Login Attempted" customAttributes:@{@"Username":fieldLoginUsername.text,
+                                                                              @"deviceName":fieldLoginDeviceName.text,
+                                                                              @"deviceToken":@"testing"}];
+        [self startCurrentSpinner];
+    } else {
+        [self showErrors: errors];
+    }
 }
 
 - (IBAction)actionRegister:(id)sender {
-    EchoWebServiceClient *client = [[EchoWebServiceClient alloc] init];
-    client.delegate = self;
-    [client registerUsername: fieldRegisterUsername.text
-                    password: fieldRegisterPassword.text
-             confirmPassword: fieldRegisterConfirmPassword.text];
     
-    [Answers logCustomEventWithName:@"Register Attempted" customAttributes:@{@"Username":fieldRegisterUsername.text}];
+    NSArray<EchoTextFieldValidationError *> *errors = [EchoTextFieldValidationError validateFields:@[fieldRegisterUsername, fieldRegisterPassword, fieldRegisterConfirmPassword]];
     
-    [self startSpinner:spinnerRegister darkenView:viewRegisterDarken];
-}
-
-- (void)startSpinner:(UIActivityIndicatorView*)spinner darkenView:(UIView*)darkenView {
-    [btnNeedAccountOrLogin setEnabled: NO];
-    [spinner setAlpha: 1.0];
-    [UIView animateWithDuration:2 animations:^{
-        [spinner startAnimating];
-        [spinner setHidden: NO];
-        [darkenView setHidden: NO];
-    }];
-}
-
-- (void)stopSpinner:(UIActivityIndicatorView*)spinner darkenView:(UIView*)darkenView {
-    [btnNeedAccountOrLogin setEnabled: YES];
-    [UIView animateWithDuration:2 animations:^{
-        [spinner stopAnimating];
-        [spinner setHidden: YES];
-        [spinner setAlpha: 0];
-        [darkenView setHidden: YES];
-    }];
+    if(IS_EMPTY(errors)) {
+        EchoWebServiceClient *client = [[EchoWebServiceClient alloc] init];
+        client.delegate = self;
+        [client registerUsername: fieldRegisterUsername.text
+                        password: fieldRegisterPassword.text
+                 confirmPassword: fieldRegisterConfirmPassword.text];
+        
+        [Answers logCustomEventWithName:@"Register Attempted" customAttributes:@{@"Username":fieldRegisterUsername.text}];
+        
+        [self startCurrentSpinner];
+    } else {
+        [self showErrors: errors];
+    }
 }
 
 #pragma mark -
@@ -241,13 +302,15 @@ typedef enum : NSUInteger {
 #pragma mark EchoWebServiceClientDelegate
 
 - (void)requestFailed:(NSError *)error {
-    
+    [self stopCurrentSpinner];
+    [[self currentAlertText] setText:[error localizedDescription]];
+    [[self currentAlertText] setHidden: NO];
 }
 
 - (void)loginFailed:(NSString *)reason {
     [textLoginAlert setText: reason];
     [textLoginAlert setHidden: NO];
-    [self stopSpinner:spinnerLogin darkenView:viewLoginDarken];
+    [self stopCurrentSpinner];
 }
 
 - (void)loginSuccessful:(Session *)session {
@@ -259,7 +322,7 @@ typedef enum : NSUInteger {
 - (void)registerFailed:(NSString *)reason {
     [textRegisterAlert setText: reason];
     [textRegisterAlert setHidden: NO];
-    [self stopSpinner:spinnerRegister darkenView:viewRegisterDarken];
+    [self stopCurrentSpinner];
 }
 
 - (void)registerSuccessful:(NSString *)username {
@@ -267,7 +330,7 @@ typedef enum : NSUInteger {
     [fieldLoginUsername setText: username];
     [textRegisterAlert setHidden: YES];
     [textRegisterAlert setText: @""];
-    [self stopSpinner:spinnerRegister darkenView:viewRegisterDarken];
+    [self stopCurrentSpinner];
 }
 
 #pragma mark -

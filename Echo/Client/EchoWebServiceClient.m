@@ -174,10 +174,15 @@
 
 - (void)executeRequest:(NSURLRequest*)request
         successHandler:(void (^)(NSDictionary* response))successHandler {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible: YES];
     NSURLSession *session = [NSURLSession sharedSession];
-    [[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    [[session dataTaskWithRequest:request
+                completionHandler: ^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible: NO];
         if(error) {
-            [self.delegate requestFailed: error];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.delegate requestFailed: error];
+            });
         } else {
             NSError *jsonError;
             NSDictionary *response = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
