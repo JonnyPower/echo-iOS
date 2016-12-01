@@ -61,7 +61,11 @@
     channel = [[PhxChannel alloc] initWithSocket:socket topic:[NSString stringWithFormat:@"echoes:%@", session.username] params:nil];
     channel.delegate = self;
     
-    id join = [channel join];
+    [channel onEvent:@"message" callback:^(id message, id ref) {
+        [self saveMessage: message];
+    }];
+    
+    PhxPush *join = [channel join];
     [join onReceive:@"ok" callback:^(id response) {
         [Answers logCustomEventWithName:@"Connected with session" customAttributes:@{@"username":session.username,
                                                                                      @"deviceName":session.deviceName,
@@ -162,7 +166,7 @@
     if(![socket isConnected]) {
         for (id<EchoWebSocketClientDelegate> delegate in delegates) {
             if([delegate respondsToSelector:@selector(connectFailed:)]) {
-                [delegate connectFailed:[error message]];
+                [delegate connectFailed:[error localizedDescription]];
             }
         }
     }

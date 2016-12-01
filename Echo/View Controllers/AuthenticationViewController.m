@@ -387,8 +387,9 @@ typedef enum : NSUInteger {
 }
 
 - (void)connectFailed:(NSString*)reason {
-    [textLoginAlert setText: reason];
-    [textLoginAlert setHidden: NO];
+    [[self currentAlertText] setText: reason];
+    [[self currentAlertText] setHidden: NO];
+    [self stopCurrentSpinner];
 }
 
 @end

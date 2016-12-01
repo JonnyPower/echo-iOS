@@ -38,7 +38,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="emptyAllowed" value="NO"/>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="allowedEmpty" value="NO"/>
                                             <userDefinedRuntimeAttribute type="number" keyPath="minimumLength">
                                                 <integer key="value" value="3"/>
                                             </userDefinedRuntimeAttribute>
@@ -60,7 +60,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="emptyAllowed" value="NO"/>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="allowedEmpty" value="NO"/>
                                             <userDefinedRuntimeAttribute type="number" keyPath="minimumLength">
                                                 <integer key="value" value="3"/>
                                             </userDefinedRuntimeAttribute>
@@ -82,7 +82,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" secureTextEntry="YES"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="emptyAllowed" value="NO"/>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="allowedEmpty" value="NO"/>
                                             <userDefinedRuntimeAttribute type="number" keyPath="minimumLength">
                                                 <integer key="value" value="6"/>
                                             </userDefinedRuntimeAttribute>
@@ -204,7 +204,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="emptyAllowed" value="NO"/>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="allowedEmpty" value="NO"/>
                                             <userDefinedRuntimeAttribute type="number" keyPath="minimumLength">
                                                 <integer key="value" value="3"/>
                                             </userDefinedRuntimeAttribute>
@@ -226,7 +226,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next" secureTextEntry="YES"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="emptyAllowed" value="NO"/>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="allowedEmpty" value="NO"/>
                                             <userDefinedRuntimeAttribute type="number" keyPath="minimumLength">
                                                 <integer key="value" value="6"/>
                                             </userDefinedRuntimeAttribute>
@@ -248,7 +248,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" secureTextEntry="YES"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="emptyAllowed" value="NO"/>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="allowedEmpty" value="NO"/>
                                             <userDefinedRuntimeAttribute type="number" keyPath="minimumLength">
                                                 <integer key="value" value="6"/>
                                             </userDefinedRuntimeAttribute>
