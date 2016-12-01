@@ -68,6 +68,9 @@
 		F03D254D1DE7956500CD2225 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F03D254C1DE7956500CD2225 /* BaseViewController.m */; };
 		F03D254E1DE7956500CD2225 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F03D254C1DE7956500CD2225 /* BaseViewController.m */; };
 		F03D254F1DE7956500CD2225 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F03D254C1DE7956500CD2225 /* BaseViewController.m */; };
+		F07446631DEF7DFB00CAEA07 /* EchoTextFieldValidationError.m in Sources */ = {isa = PBXBuildFile; fileRef = F07446621DEF7DFB00CAEA07 /* EchoTextFieldValidationError.m */; };
+		F07446641DEF7DFB00CAEA07 /* EchoTextFieldValidationError.m in Sources */ = {isa = PBXBuildFile; fileRef = F07446621DEF7DFB00CAEA07 /* EchoTextFieldValidationError.m */; };
+		F07446651DEF7DFB00CAEA07 /* EchoTextFieldValidationError.m in Sources */ = {isa = PBXBuildFile; fileRef = F07446621DEF7DFB00CAEA07 /* EchoTextFieldValidationError.m */; };
 		F0A534BE1CDB4EEE00A6D83A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F0A534BD1CDB4EEE00A6D83A /* main.m */; };
 		F0A534C11CDB4EEE00A6D83A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F0A534C01CDB4EEE00A6D83A /* AppDelegate.m */; };
 		F0A534C41CDB4EEE00A6D83A /* AuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0A534C31CDB4EEE00A6D83A /* AuthenticationViewController.m */; };
@@ -130,6 +133,8 @@
 		F03D254A1DE791E600CD2225 /* Test-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Test-Info.plist"; sourceTree = "<group>"; };
 		F03D254B1DE7956500CD2225 /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		F03D254C1DE7956500CD2225 /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
+		F07446611DEF7DFB00CAEA07 /* EchoTextFieldValidationError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EchoTextFieldValidationError.h; sourceTree = "<group>"; };
+		F07446621DEF7DFB00CAEA07 /* EchoTextFieldValidationError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EchoTextFieldValidationError.m; sourceTree = "<group>"; };
 		F0A534B91CDB4EEE00A6D83A /* Echo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Echo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0A534BD1CDB4EEE00A6D83A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F0A534BF1CDB4EEE00A6D83A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -249,6 +254,8 @@
 			isa = PBXGroup;
 			children = (
 				F03D24F51DE78EFC00CD2225 /* Helpers.h */,
+				F07446611DEF7DFB00CAEA07 /* EchoTextFieldValidationError.h */,
+				F07446621DEF7DFB00CAEA07 /* EchoTextFieldValidationError.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -886,6 +893,7 @@
 				F03D250B1DE791DA00CD2225 /* EchoWebSocketClient.m in Sources */,
 				F03D250C1DE791DA00CD2225 /* main.m in Sources */,
 				F03D250D1DE791DA00CD2225 /* Message.m in Sources */,
+				F07446651DEF7DFB00CAEA07 /* EchoTextFieldValidationError.m in Sources */,
 				F03D250E1DE791DA00CD2225 /* EchoWebServiceClient.h in Sources */,
 				F03D250F1DE791DA00CD2225 /* EchoTextFieldForm.m in Sources */,
 				F03D25101DE791DA00CD2225 /* Participant+CoreDataProperties.m in Sources */,
@@ -913,6 +921,7 @@
 				F03D25321DE791E600CD2225 /* EchoWebSocketClient.m in Sources */,
 				F03D25331DE791E600CD2225 /* main.m in Sources */,
 				F03D25341DE791E600CD2225 /* Message.m in Sources */,
+				F07446641DEF7DFB00CAEA07 /* EchoTextFieldValidationError.m in Sources */,
 				F03D25351DE791E600CD2225 /* EchoWebServiceClient.h in Sources */,
 				F03D25361DE791E600CD2225 /* EchoTextFieldForm.m in Sources */,
 				F03D25371DE791E600CD2225 /* Participant+CoreDataProperties.m in Sources */,
@@ -940,6 +949,7 @@
 				F0B487E81CDD2DE200C6AE6C /* EchoWebSocketClient.m in Sources */,
 				F0A534BE1CDB4EEE00A6D83A /* main.m in Sources */,
 				F0B488031CDE3C1000C6AE6C /* Message.m in Sources */,
+				F07446631DEF7DFB00CAEA07 /* EchoTextFieldValidationError.m in Sources */,
 				F0A535071CDCCDD900A6D83A /* EchoWebServiceClient.h in Sources */,
 				F0B488091CDEB2D800C6AE6C /* EchoTextFieldForm.m in Sources */,
 				F0B487F11CDD3CC900C6AE6C /* Participant+CoreDataProperties.m in Sources */,

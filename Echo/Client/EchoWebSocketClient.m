@@ -7,14 +7,13 @@
 //
 
 #import "EchoWebSocketClient.h"
-
 #import "Participant.h"
-
 #import "AppDelegate.h"
+#import "Helpers.h"
 
 #import <Crashlytics/Crashlytics.h>
 
-#define SOCKET_URL_STRING @"http://192.168.0.11:4000/echo/websocket"
+#define SOCKET_URL_STRING ENVIRONMENT_PLIST_KEY_PATH(@"WebSocketURL")
 
 @interface EchoWebSocketClient ()
 
@@ -96,7 +95,7 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     NSLocale *enUSPOSIXLocale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
     [dateFormatter setLocale:enUSPOSIXLocale];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
+    [dateFormatter setDateFormat:@"yyyyMMdd'T'HHmmssZ"];
     
     NSDate *sent = [NSDate date];
     NSString *iso8601String = [dateFormatter stringFromDate:sent];
@@ -151,19 +150,43 @@
     socket.delegate = self;
 }
 
+#pragma mark -
+#pragma mark PhxSocketDelegate
+
 - (void)phxSocketDidOpen {
     NSLog(@"socket open");
 }
 
 - (void)phxSocketDidReceiveError:(id)error {
     NSLog(@"socket error: %@", [error description]);
+    if(![socket isConnected]) {
+        for (id<EchoWebSocketClientDelegate> delegate in delegates) {
+            if([delegate respondsToSelector:@selector(connectFailed:)]) {
+                [delegate connectFailed:[error message]];
+            }
+        }
+    }
 }
 
 - (void)phxSocketDidClose:(NSError*)error {
-    if([[error.userInfo objectForKey:@"HTTPResponseStatusCode"] intValue] == 403) {
+    if([error isKindOfClass:[NSString class]]) {
         [((AppDelegate*)[UIApplication sharedApplication].delegate) logout];
+        NSLog(@"socket close: %@", error);
+    } else if([[error.userInfo objectForKey:@"HTTPResponseStatusCode"] intValue] == 403) {
+        [((AppDelegate*)[UIApplication sharedApplication].delegate) logout];
+        NSLog(@"socket close: %@", [error description]);
     }
-    NSLog(@"socket close: %@", [error description]);
+}
+
+#pragma mark -
+#pragma mark PhxChannelDelegate
+
+- (void)phxChannelClosed {
+    
+}
+
+- (void)phxChannelDidReceiveError:(id)error {
+    
 }
 
 - (void)saveMessage:(NSDictionary*)messageDictionary {
@@ -178,7 +201,8 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     NSLocale *enUSPOSIXLocale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
     [dateFormatter setLocale:enUSPOSIXLocale];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZ"];
+    [dateFormatter setLenient: YES];
+    [dateFormatter setDateFormat:@"yyyyMMdd'T'HHmmssZ"];
     
     NSDate *sent = [dateFormatter dateFromString:[messageDictionary objectForKey:@"sent"]];
     

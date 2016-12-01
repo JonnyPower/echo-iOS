@@ -7,8 +7,28 @@
 //
 
 #import "EchoTextFieldForm.h"
+#import "EchoTextFieldValidationError.h"
+
+#import "Helpers.h"
+
+typedef enum : NSUInteger {
+    EchoTextFieldFormViewStateNormal,
+    EchoTextFieldFormViewStateError
+} EchoTextFieldFormViewState;
+
+@interface EchoTextFieldForm ()
+
+@property EchoTextFieldFormViewState viewState;
+
+@end
 
 @implementation EchoTextFieldForm
+
+@synthesize allowedEmpty;
+@synthesize minimumLength;
+@synthesize maximumLength;
+
+@synthesize viewState = _viewState;
 
 - (id)commonInit:(EchoTextFieldForm*)textField {
     if(textField) {
@@ -35,11 +55,49 @@
     
     CALayer *border = [CALayer layer];
     CGFloat borderWidth = 1;
-    border.borderColor = [UIColor darkGrayColor].CGColor;
+    border.borderColor = [self borderColor];
     border.frame = CGRectMake(0, self.frame.size.height - borderWidth, self.frame.size.width, borderWidth);
     border.borderWidth = borderWidth;
     [self.layer addSublayer:border];
     self.layer.masksToBounds = YES;
+}
+
+- (CGColorRef)borderColor {
+    return (_viewState == EchoTextFieldFormViewStateNormal ? [UIColor darkGrayColor] : [UIColor redColor]).CGColor;
+}
+
+- (void)setToErrorState {
+    _viewState = EchoTextFieldFormViewStateError;
+    [self setNeedsDisplay];
+}
+
+- (void)setToNormalState {
+    _viewState = EchoTextFieldFormViewStateNormal;
+    [self setNeedsDisplay];
+}
+
+- (BOOL)becomeFirstResponder {
+    BOOL superBecomeFirstResponder = [super becomeFirstResponder];
+    _viewState = EchoTextFieldFormViewStateNormal;
+    [self setNeedsDisplay];
+    return superBecomeFirstResponder;
+}
+
+- (NSArray<EchoTextFieldValidationError*>*)validate {
+    NSMutableArray<EchoTextFieldValidationError*> *errors = [NSMutableArray array];
+    
+    if(!self.allowedEmpty && IS_EMPTY(self.text)) {
+        [errors addObject:[EchoTextFieldValidationError errorFor: self
+                                                          reason: EchoTextFieldValidationErrorTypeEmpty]];
+    } else if([self.text length] > maximumLength) {
+        [errors addObject:[EchoTextFieldValidationError errorFor: self
+                                                          reason: EchoTextFieldValidationErrorTypeMaximumLength]];
+    } else if([self.text length] < minimumLength) {
+        [errors addObject:[EchoTextFieldValidationError errorFor: self
+                                                          reason: EchoTextFieldValidationErrorTypeMinimumLength]];
+    }
+    
+    return [NSArray arrayWithArray: errors];
 }
 
 @end

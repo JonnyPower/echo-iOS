@@ -8,10 +8,9 @@
 
 #import "EchoWebServiceClient.h"
 #import "AppDelegate.h"
+#import "Helpers.h"
 
 #import <Crashlytics/Crashlytics.h>
-
-#define API_URL_STRING @"http://192.168.0.11:4000/api/"
 
 @interface EchoWebServiceClient ()
 
@@ -21,13 +20,10 @@
 
 @synthesize delegate;
 
-- (void)logoutSessionToken:(NSString *)sessionToken deviceToken:(NSString *)deviceToken {
+- (void)logoutSessionToken:(NSString *)sessionToken
+               deviceToken:(NSString *)deviceToken {
     
-    NSURL *logoutUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@logout", API_URL_STRING]];
-    
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:logoutUrl];
-    request.HTTPMethod = @"POST";
-    [request setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    NSMutableURLRequest *request = [self requestForRoute:@"logout"];
     
     NSData* jsonData = [NSJSONSerialization dataWithJSONObject: @{
                                                                   @"session_token": sessionToken,
@@ -64,19 +60,23 @@
     username = [username stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     deviceName = [deviceName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     
-    NSURL *loginUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@login", API_URL_STRING]];
-    
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:loginUrl];
-    request.HTTPMethod = @"POST";
-    [request setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    NSMutableURLRequest *request = [self requestForRoute:@"login"];
     
     NSData* jsonData = [NSJSONSerialization dataWithJSONObject: @{
                                                                   @"name": username,
                                                                   @"password": password,
+                                                                  @"platform": @{
+                                                                    @"type": @"iOS",
+                                                                    @"version": [[UIDevice currentDevice] systemVersion]
+                                                                  },
                                                                   @"device": @{
                                                                     @"token": deviceToken,
-                                                                    @"name": deviceName,
-                                                                    @"type": @"iOS"
+                                                                    @"name": deviceName
+                                                                  },
+                                                                  @"client": @{
+                                                                    @"name": [NSString stringWithFormat:@"Echo-iOS - %s", MACRO_VALUE(ENVIRONMENT)],
+                                                                    @"version": [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"],
+                                                                    @"build": [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleVersionKey]
                                                                   },
                                                                   @"timezone": [[NSTimeZone localTimeZone] name]
                                                                 }
@@ -121,11 +121,68 @@
     }];
 }
 
-- (void)executeRequest:(NSURLRequest*)request successHandler:(void (^)(NSDictionary* response))successHandler {
+- (void)registerUsername:(NSString *)username
+                password:(NSString *)password
+         confirmPassword:(NSString *)confirmPassword {
+    
+    username = [username stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    
+    NSMutableURLRequest *request = [self requestForRoute:@"register"];
+    
+    NSData* jsonData = [NSJSONSerialization dataWithJSONObject: @{
+                                                                  @"name": username,
+                                                                  @"password": password,
+                                                                  @"confirm": confirmPassword
+                                                                  }
+                                                       options:0
+                                                         error:nil];
+    request.HTTPBody = jsonData;
+    
+    [self executeRequest:request successHandler:^(NSDictionary *response) {
+        BOOL success = [[response objectForKey:@"success"] boolValue];
+        if(success) {
+            if([self.delegate respondsToSelector:@selector(registerSuccessful:)]) {
+                [Answers logCustomEventWithName:@"Register Sucessful" customAttributes:@{@"username":username}];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.delegate registerSuccessful: username];
+                });
+            }
+        } else {
+            if([self.delegate respondsToSelector:@selector(registerFailed:)]) {
+                NSString *failureReason = [response objectForKey:@"message"];
+                failureReason = failureReason == nil ? @"Unknown reason for failure" : failureReason;
+                [Answers logCustomEventWithName:@"Register Failed" customAttributes:@{@"username":username,
+                                                                                      @"reason": failureReason}];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [delegate registerFailed:failureReason];
+                });
+            }
+        }
+    }];
+    
+}
+
+- (NSMutableURLRequest*)requestForRoute:(NSString*)route {
+    NSURL *registerUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", ENVIRONMENT_PLIST_KEY_PATH(@"WebServiceURL"), route]];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:registerUrl];
+    request.HTTPMethod = @"POST";
+    [request setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    
+    return request;
+}
+
+- (void)executeRequest:(NSURLRequest*)request
+        successHandler:(void (^)(NSDictionary* response))successHandler {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible: YES];
     NSURLSession *session = [NSURLSession sharedSession];
-    [[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+    [[session dataTaskWithRequest:request
+                completionHandler: ^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible: NO];
         if(error) {
-            [self.delegate requestFailed: error];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.delegate requestFailed: error];
+            });
         } else {
             NSError *jsonError;
             NSDictionary *response = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];

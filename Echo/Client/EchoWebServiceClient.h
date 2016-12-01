@@ -16,8 +16,11 @@
 
 @optional
 
-- (void)loginFailed:(NSString*)reason;
+- (void)registerSuccessful:(NSString*)username;
+- (void)registerFailed:(NSString*)reason;
+
 - (void)loginSuccessful:(Session*)session;
+- (void)loginFailed:(NSString*)reason;
 
 - (void)logoutSuccessful;
 - (void)logoutFailed:(NSString*)reason;
@@ -28,7 +31,14 @@
 
 @property id<EchoWebServiceClientDelegate> delegate;
 
-- (void)loginUsername:(NSString*)username password:(NSString*)password deviceName:(NSString*)deviceName deviceToken:(NSString*)deviceToken;
-- (void)logoutSessionToken:(NSString*)sessionToken deviceToken:(NSString*)deviceToken;
+- (void)registerUsername:(NSString*)username
+                password:(NSString*)password
+         confirmPassword:(NSString*)confirmPassword;
+- (void)loginUsername:(NSString*)username
+             password:(NSString*)password
+           deviceName:(NSString*)deviceName
+          deviceToken:(NSString*)deviceToken;
+- (void)logoutSessionToken:(NSString*)sessionToken
+               deviceToken:(NSString*)deviceToken;
 
 @end

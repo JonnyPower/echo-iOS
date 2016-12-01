@@ -24,6 +24,8 @@
 - (void)messageHistoryFinished;
 - (void)messageHistoryFailed:(NSString*)reason;
 
+- (void)socketDidClose:(NSString*)reason;
+
 @end
 
 @interface EchoWebSocketClient : NSObject <PhxSocketDelegate, PhxChannelDelegate>
