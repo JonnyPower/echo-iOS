@@ -36,7 +36,7 @@
                                         </constraints>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="emptyAllowed" value="NO"/>
                                             <userDefinedRuntimeAttribute type="number" keyPath="minimumLength">
@@ -58,7 +58,7 @@
                                         </constraints>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="emptyAllowed" value="NO"/>
                                             <userDefinedRuntimeAttribute type="number" keyPath="minimumLength">
@@ -80,7 +80,7 @@
                                         </constraints>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" secureTextEntry="YES"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="emptyAllowed" value="NO"/>
                                             <userDefinedRuntimeAttribute type="number" keyPath="minimumLength">
@@ -188,7 +188,7 @@
                                         </constraints>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="emptyAllowed" value="NO"/>
                                             <userDefinedRuntimeAttribute type="number" keyPath="minimumLength">
@@ -210,7 +210,7 @@
                                         </constraints>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next" secureTextEntry="YES"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="emptyAllowed" value="NO"/>
                                             <userDefinedRuntimeAttribute type="number" keyPath="minimumLength">
@@ -232,7 +232,7 @@
                                         </constraints>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" secureTextEntry="YES"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="emptyAllowed" value="NO"/>
                                             <userDefinedRuntimeAttribute type="number" keyPath="minimumLength">
@@ -371,6 +371,7 @@
                         <outlet property="buttonRegister" destination="od2-Kd-fgc" id="85r-Ew-ePo"/>
                         <outlet property="constraintXLoginToBaseView" destination="Tea-EI-7Ip" id="N9n-Ar-QS7"/>
                         <outlet property="constraintXRegisterToLoginX" destination="7Rv-W1-8yQ" id="NgG-Vm-qgN"/>
+                        <outlet property="constraintYLoginToBaseView" destination="tKn-qh-mVh" id="YrR-hX-jxN"/>
                         <outlet property="fieldLoginDeviceName" destination="tAu-za-M91" id="YUQ-vD-UoD"/>
                         <outlet property="fieldLoginPassword" destination="u7N-qk-cC0" id="Nu6-T3-0Cq"/>
                         <outlet property="fieldLoginUsername" destination="URF-AL-v1e" id="Mpp-mW-odJ"/>
