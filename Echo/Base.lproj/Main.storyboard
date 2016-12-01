@@ -36,9 +36,9 @@
                                         </constraints>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="emptyAllowed" value="NO"/>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="allowedEmpty" value="NO"/>
                                             <userDefinedRuntimeAttribute type="number" keyPath="minimumLength">
                                                 <integer key="value" value="3"/>
                                             </userDefinedRuntimeAttribute>
@@ -58,9 +58,9 @@
                                         </constraints>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="emptyAllowed" value="NO"/>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="allowedEmpty" value="NO"/>
                                             <userDefinedRuntimeAttribute type="number" keyPath="minimumLength">
                                                 <integer key="value" value="3"/>
                                             </userDefinedRuntimeAttribute>
@@ -80,9 +80,9 @@
                                         </constraints>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" secureTextEntry="YES"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="emptyAllowed" value="NO"/>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="allowedEmpty" value="NO"/>
                                             <userDefinedRuntimeAttribute type="number" keyPath="minimumLength">
                                                 <integer key="value" value="6"/>
                                             </userDefinedRuntimeAttribute>
@@ -137,6 +137,7 @@
                                     <constraint firstItem="Cuy-Nv-dZM" firstAttribute="centerX" secondItem="63z-dl-ahz" secondAttribute="centerX" id="9nn-NY-eHD"/>
                                     <constraint firstItem="xvp-CW-M7n" firstAttribute="centerX" secondItem="63z-dl-ahz" secondAttribute="centerX" id="BJf-nD-SR4"/>
                                     <constraint firstItem="kZ7-qc-xQC" firstAttribute="top" secondItem="63z-dl-ahz" secondAttribute="top" id="GVT-Hl-NsG"/>
+                                    <constraint firstAttribute="height" constant="200" id="WCh-W4-tP7"/>
                                     <constraint firstItem="tAu-za-M91" firstAttribute="centerX" secondItem="63z-dl-ahz" secondAttribute="centerX" id="ZKe-fH-gV8"/>
                                     <constraint firstItem="RKB-DE-hAM" firstAttribute="centerX" secondItem="63z-dl-ahz" secondAttribute="centerX" id="aAC-5M-foH"/>
                                     <constraint firstItem="u7N-qk-cC0" firstAttribute="top" secondItem="URF-AL-v1e" secondAttribute="bottom" constant="8" id="drT-A8-qKw"/>
@@ -158,9 +159,22 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="5"/>
                                     <userDefinedRuntimeAttribute type="string" keyPath="layer.borderWidth" value="1"/>
                                 </userDefinedRuntimeAttributes>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="WCh-W4-tP7"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=compact">
+                                    <mask key="subviews">
+                                        <exclude reference="xvp-CW-M7n"/>
+                                    </mask>
+                                    <mask key="constraints">
+                                        <include reference="WCh-W4-tP7"/>
+                                        <exclude reference="zV9-2b-eIA"/>
+                                    </mask>
+                                </variation>
                                 <variation key="heightClass=regular-widthClass=compact">
                                     <mask key="subviews">
-                                        <include reference="xvp-CW-M7n"/>
                                         <include reference="tAu-za-M91"/>
                                         <include reference="URF-AL-v1e"/>
                                         <include reference="u7N-qk-cC0"/>
@@ -188,9 +202,9 @@
                                         </constraints>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="emptyAllowed" value="NO"/>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="allowedEmpty" value="NO"/>
                                             <userDefinedRuntimeAttribute type="number" keyPath="minimumLength">
                                                 <integer key="value" value="3"/>
                                             </userDefinedRuntimeAttribute>
@@ -210,9 +224,9 @@
                                         </constraints>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next" secureTextEntry="YES"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="emptyAllowed" value="NO"/>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="allowedEmpty" value="NO"/>
                                             <userDefinedRuntimeAttribute type="number" keyPath="minimumLength">
                                                 <integer key="value" value="6"/>
                                             </userDefinedRuntimeAttribute>
@@ -232,9 +246,9 @@
                                         </constraints>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" secureTextEntry="YES"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="emptyAllowed" value="NO"/>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="allowedEmpty" value="NO"/>
                                             <userDefinedRuntimeAttribute type="number" keyPath="minimumLength">
                                                 <integer key="value" value="6"/>
                                             </userDefinedRuntimeAttribute>
@@ -281,7 +295,9 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="Hu6-lt-HuN" firstAttribute="centerX" secondItem="UZa-Gh-mBp" secondAttribute="centerX" id="2aD-b3-gsp"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="255" id="2ll-ke-wU7"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="255" id="2ll-ke-wU7">
+                                        <variation key="heightClass=compact" constant="200"/>
+                                    </constraint>
                                     <constraint firstItem="X5F-FO-lMr" firstAttribute="top" secondItem="IeR-HY-wA0" secondAttribute="bottom" constant="8" id="62w-Y5-YDD"/>
                                     <constraint firstItem="BbG-J3-uWI" firstAttribute="centerX" secondItem="UZa-Gh-mBp" secondAttribute="centerX" id="7oM-C6-hrE"/>
                                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="od2-Kd-fgc" secondAttribute="bottom" constant="20" id="8E2-e4-2Ed"/>
@@ -308,6 +324,11 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="5"/>
                                     <userDefinedRuntimeAttribute type="string" keyPath="layer.borderWidth" value="1"/>
                                 </userDefinedRuntimeAttributes>
+                                <variation key="heightClass=compact">
+                                    <mask key="subviews">
+                                        <exclude reference="Hu6-lt-HuN"/>
+                                    </mask>
+                                </variation>
                                 <variation key="heightClass=regular-widthClass=compact">
                                     <mask key="subviews">
                                         <include reference="IeR-HY-wA0"/>
@@ -347,19 +368,26 @@
                             <constraint firstItem="63z-dl-ahz" firstAttribute="top" secondItem="hEX-mb-Jnc" secondAttribute="bottom" constant="10" id="LeY-wO-Sx5"/>
                             <constraint firstItem="63z-dl-ahz" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Tea-EI-7Ip"/>
                             <constraint firstItem="hEX-mb-Jnc" firstAttribute="top" relation="greaterThanOrEqual" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="2" id="hsz-eN-O6i"/>
+                            <constraint firstItem="UZa-Gh-mBp" firstAttribute="centerY" secondItem="63z-dl-ahz" secondAttribute="centerY" id="jkW-zg-aBF"/>
                             <constraint firstItem="UZa-Gh-mBp" firstAttribute="top" secondItem="63z-dl-ahz" secondAttribute="top" id="kz2-uv-hlk"/>
                             <constraint firstItem="su2-9J-NUe" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="190" id="rbk-m2-Ar0">
                                 <variation key="heightClass=compact" constant="170"/>
                             </constraint>
-                            <constraint firstItem="63z-dl-ahz" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="tKn-qh-mVh">
-                                <variation key="heightClass=compact" constant="20"/>
-                            </constraint>
+                            <constraint firstItem="63z-dl-ahz" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="tKn-qh-mVh"/>
                             <constraint firstItem="su2-9J-NUe" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="uec-hm-vbI"/>
                         </constraints>
-                        <variation key="heightClass=regular-widthClass=compact">
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="jkW-zg-aBF"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=compact">
                             <mask key="subviews">
-                                <include reference="63z-dl-ahz"/>
-                                <include reference="su2-9J-NUe"/>
+                                <exclude reference="hEX-mb-Jnc"/>
+                                <exclude reference="su2-9J-NUe"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="jkW-zg-aBF"/>
                             </mask>
                         </variation>
                     </view>
@@ -371,6 +399,7 @@
                         <outlet property="buttonRegister" destination="od2-Kd-fgc" id="85r-Ew-ePo"/>
                         <outlet property="constraintXLoginToBaseView" destination="Tea-EI-7Ip" id="N9n-Ar-QS7"/>
                         <outlet property="constraintXRegisterToLoginX" destination="7Rv-W1-8yQ" id="NgG-Vm-qgN"/>
+                        <outlet property="constraintYLoginToBaseView" destination="tKn-qh-mVh" id="YrR-hX-jxN"/>
                         <outlet property="fieldLoginDeviceName" destination="tAu-za-M91" id="YUQ-vD-UoD"/>
                         <outlet property="fieldLoginPassword" destination="u7N-qk-cC0" id="Nu6-T3-0Cq"/>
                         <outlet property="fieldLoginUsername" destination="URF-AL-v1e" id="Mpp-mW-odJ"/>

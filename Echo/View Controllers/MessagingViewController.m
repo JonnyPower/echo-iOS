@@ -227,16 +227,11 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     Message *message = [fetchedResultsController objectAtIndexPath:indexPath];
-    //
     CGRect messageBoundingRect = [message.content boundingRectWithSize:CGSizeMake([[UIScreen mainScreen] bounds].size.width - 40, 0)
                                                                options:(NSStringDrawingUsesLineFragmentOrigin)
                                                             attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:12.0f]}
                                                                context:nil];
-    if([message.content isEqualToString:@"Testing a really long message so that I have to write the logic for taller cells in the table view! Blah blah blah blah!"]) {
-        NSLog(@"Long string");
-    }
     return ceilf(messageBoundingRect.size.height + 58);
 }
 

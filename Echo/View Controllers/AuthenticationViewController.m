@@ -25,6 +25,7 @@ typedef enum : NSUInteger {
 @property (weak, nonatomic) IBOutlet UIView *viewRegisterForm;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *constraintXRegisterToLoginX;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *constraintXLoginToBaseView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *constraintYLoginToBaseView;
 @property (weak, nonatomic) IBOutlet UIButton *btnNeedAccountOrLogin;
 
 @property AuthenticationViewControllerViewState viewState;
@@ -141,7 +142,6 @@ typedef enum : NSUInteger {
     NSString *errorString = [NSString string];
     for(EchoTextFieldValidationError *error in errors) {
         [error.target setToErrorState];
-        NSLog(@"Got error: %@", [error reasonString]);
         if(!IS_EMPTY(errorString)) {
             errorString = [NSString stringWithFormat:@"%@\n", errorString];
         }
@@ -162,6 +162,36 @@ typedef enum : NSUInteger {
 }
 
 #pragma mark -
+#pragma mark Keyboard Notification Observers
+
+- (void)keyboardWillShow:(NSNotification *)sender {
+    NSTimeInterval duration = [[[sender userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    NSUInteger curve = [[[sender userInfo] objectForKey:UIKeyboardAnimationCurveUserInfoKey] unsignedIntegerValue];
+    CGRect keyboardFrame = [[[sender userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    [UIView animateWithDuration:duration
+                          delay: 0.0
+                        options: UIViewAnimationOptionBeginFromCurrentState
+                     animations: ^{
+        [UIView setAnimationCurve:curve];
+        self.constraintYLoginToBaseView.constant = 0.0f - (keyboardFrame.size.height / 2);
+    } completion:^(BOOL finished) {
+    }];
+}
+
+- (void)keyboardWillHide:(NSNotification *)sender {
+    NSTimeInterval duration = [[[sender userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    NSUInteger curve = [[[sender userInfo] objectForKey:UIKeyboardAnimationCurveUserInfoKey] unsignedIntegerValue];
+    [UIView animateWithDuration: duration
+                          delay: 0.0
+                        options: UIViewAnimationOptionBeginFromCurrentState
+                     animations: ^{
+        [UIView setAnimationCurve:curve];
+        self.constraintYLoginToBaseView.constant = 0.0f;
+    } completion:^(BOOL finished) {
+    }];
+}
+
+#pragma mark -
 #pragma mark UIViewController
 
 - (void)viewDidLoad {
@@ -171,6 +201,9 @@ typedef enum : NSUInteger {
     
     [self styleFormView:viewLoginForm];
     [self styleFormView:viewRegisterForm];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -282,6 +315,7 @@ typedef enum : NSUInteger {
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
+    
     if([textField isEqual:fieldLoginDeviceName]) {
         [fieldLoginUsername becomeFirstResponder];
     }
@@ -291,6 +325,17 @@ typedef enum : NSUInteger {
     if([textField isEqual:fieldLoginPassword] && !IS_EMPTY(fieldLoginDeviceName.text) && !IS_EMPTY(fieldLoginUsername.text)) {
         [self.buttonLogin sendActionsForControlEvents:UIControlEventTouchUpInside];
     }
+    
+    if([textField isEqual:fieldRegisterUsername]) {
+        [fieldRegisterPassword becomeFirstResponder];
+    }
+    if([textField isEqual:fieldRegisterPassword]) {
+        [fieldRegisterConfirmPassword becomeFirstResponder];
+    }
+    if([textField isEqual:fieldRegisterConfirmPassword] && !IS_EMPTY(fieldRegisterPassword.text) && !IS_EMPTY(fieldRegisterUsername.text)) {
+        [self.buttonRegister sendActionsForControlEvents:UIControlEventTouchUpInside];
+    }
+    
     return YES;
 }
 
@@ -342,8 +387,9 @@ typedef enum : NSUInteger {
 }
 
 - (void)connectFailed:(NSString*)reason {
-    [textLoginAlert setText: reason];
-    [textLoginAlert setHidden: NO];
+    [[self currentAlertText] setText: reason];
+    [[self currentAlertText] setHidden: NO];
+    [self stopCurrentSpinner];
 }
 
 @end

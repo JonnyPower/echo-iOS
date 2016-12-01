@@ -79,9 +79,7 @@
     EchoWebServiceClient *client = [[EchoWebServiceClient alloc] init];
     client.delegate = self;
     [client logoutSessionToken:session.sessionToken deviceToken:session.deviceToken];
-}
-
-- (void)logoutSuccessful {
+    
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"session"];
     [self.webSocketClient disconnect];
     
@@ -93,12 +91,13 @@
     }
 }
 
+- (void)logoutSuccessful {
+}
+
 - (void)logoutFailed:(NSString *)reason {
-    // TODO
 }
 
 - (void)requestFailed:(NSError *)error {
-    // TODO
 }
 
 - (void)deleteAll {
