@@ -21,7 +21,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     BOOL showVersion = [ENVIRONMENT_PLIST_KEY_PATH(@"ShowVersion") boolValue];
-    if(showVersion && NO) {
+    if(showVersion) {
         self.versionlabel = [[UILabel alloc] init];
         [self.view addSubview: self.versionlabel];
         
