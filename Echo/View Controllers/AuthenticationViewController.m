@@ -142,7 +142,6 @@ typedef enum : NSUInteger {
     NSString *errorString = [NSString string];
     for(EchoTextFieldValidationError *error in errors) {
         [error.target setToErrorState];
-        NSLog(@"Got error: %@", [error reasonString]);
         if(!IS_EMPTY(errorString)) {
             errorString = [NSString stringWithFormat:@"%@\n", errorString];
         }
