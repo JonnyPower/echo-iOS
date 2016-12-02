@@ -63,6 +63,7 @@
     
     [channel onEvent:@"message" callback:^(id message, id ref) {
         [self saveMessage: message];
+        [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 0];
     }];
     
     PhxPush *join = [channel join];
@@ -78,6 +79,7 @@
                 [delegate connectFinished];
             }
         }
+        [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 0];
     }];
     [join onReceive:@"error" callback:^(id response) {
         for (id<EchoWebSocketClientDelegate> delegate in delegates) {
@@ -139,6 +141,7 @@
                 [delegate messageHistoryFinished];
             }
         }
+        [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 0];
     }];
     [push onReceive:@"error" callback:^(id reason) {
         // TODO
@@ -194,6 +197,7 @@
 }
 
 - (void)saveMessage:(NSDictionary*)messageDictionary {
+    
     NSDictionary *from = [messageDictionary objectForKey:@"from"];
     
     NSNumber *participantId = [from objectForKey:@"id"];
