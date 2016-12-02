@@ -20,4 +20,6 @@
 - (void)setToErrorState;
 - (void)setToNormalState;
 
+- (NSString*)trimmedText;
+
 @end

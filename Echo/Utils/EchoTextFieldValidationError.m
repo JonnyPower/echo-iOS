@@ -32,7 +32,7 @@
         case EchoTextFieldValidationErrorTypeMaximumLength:
             return [NSString stringWithFormat:@"'%@' must have less than %d characters", [_target placeholder], [_target maximumLength]];
         case EchoTextFieldValidationErrorTypeEmpty:
-            return [NSString stringWithFormat:@"'%@' is required", [_target placeholder]];
+            return [NSString stringWithFormat:@"'%@' can't be empty", [_target placeholder]];
     }
 }
 

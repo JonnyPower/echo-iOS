@@ -86,18 +86,24 @@ typedef enum : NSUInteger {
 - (NSArray<EchoTextFieldValidationError*>*)validate {
     NSMutableArray<EchoTextFieldValidationError*> *errors = [NSMutableArray array];
     
-    if(!self.allowedEmpty && IS_EMPTY(self.text)) {
+    NSString *trimmedText = [self trimmedText];
+    
+    if(!self.allowedEmpty && IS_EMPTY(trimmedText)) {
         [errors addObject:[EchoTextFieldValidationError errorFor: self
                                                           reason: EchoTextFieldValidationErrorTypeEmpty]];
-    } else if([self.text length] > maximumLength) {
+    } else if([trimmedText length] > maximumLength) {
         [errors addObject:[EchoTextFieldValidationError errorFor: self
                                                           reason: EchoTextFieldValidationErrorTypeMaximumLength]];
-    } else if([self.text length] < minimumLength) {
+    } else if([trimmedText length] < minimumLength) {
         [errors addObject:[EchoTextFieldValidationError errorFor: self
                                                           reason: EchoTextFieldValidationErrorTypeMinimumLength]];
     }
     
     return [NSArray arrayWithArray: errors];
+}
+
+- (NSString *)trimmedText {
+    return [self.text stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" "]];
 }
 
 @end

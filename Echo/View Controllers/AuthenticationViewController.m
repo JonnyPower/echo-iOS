@@ -275,14 +275,17 @@ typedef enum : NSUInteger {
     if(IS_EMPTY(errors)) {
         EchoWebServiceClient *client = [[EchoWebServiceClient alloc] init];
         client.delegate = self;
-        [client loginUsername: fieldLoginUsername.text
-                     password: fieldLoginPassword.text
-                   deviceName: fieldLoginDeviceName.text
-                  deviceToken: [[FIRInstanceID instanceID] token]];
         
-        [Answers logCustomEventWithName:@"Login Attempted" customAttributes:@{@"Username":fieldLoginUsername.text,
-                                                                              @"deviceName":fieldLoginDeviceName.text,
-                                                                              @"deviceToken":@"testing"}];
+        NSString * deviceToken = [[FIRInstanceID instanceID] token];
+        
+        [client loginUsername: [fieldLoginUsername trimmedText]
+                     password: [fieldLoginPassword trimmedText]
+                   deviceName: [fieldLoginDeviceName trimmedText]
+                  deviceToken: deviceToken];
+        
+        [Answers logCustomEventWithName:@"Login Attempted" customAttributes:@{@"Username":[fieldLoginUsername trimmedText],
+                                                                              @"deviceName":[fieldLoginDeviceName trimmedText],
+                                                                              @"deviceToken":deviceToken}];
         [self startCurrentSpinner];
     } else {
         [self showErrors: errors];
@@ -296,11 +299,11 @@ typedef enum : NSUInteger {
     if(IS_EMPTY(errors)) {
         EchoWebServiceClient *client = [[EchoWebServiceClient alloc] init];
         client.delegate = self;
-        [client registerUsername: fieldRegisterUsername.text
-                        password: fieldRegisterPassword.text
-                 confirmPassword: fieldRegisterConfirmPassword.text];
+        [client registerUsername: [fieldRegisterUsername trimmedText]
+                        password: [fieldRegisterPassword trimmedText]
+                 confirmPassword: [fieldRegisterConfirmPassword trimmedText]];
         
-        [Answers logCustomEventWithName:@"Register Attempted" customAttributes:@{@"Username":fieldRegisterUsername.text}];
+        [Answers logCustomEventWithName:@"Register Attempted" customAttributes:@{@"Username":[fieldRegisterUsername trimmedText]}];
         
         [self startCurrentSpinner];
     } else {
@@ -324,7 +327,7 @@ typedef enum : NSUInteger {
     if([textField isEqual:fieldLoginUsername]) {
         [fieldLoginPassword becomeFirstResponder];
     }
-    if([textField isEqual:fieldLoginPassword] && !IS_EMPTY(fieldLoginDeviceName.text) && !IS_EMPTY(fieldLoginUsername.text)) {
+    if([textField isEqual:fieldLoginPassword] && !IS_EMPTY([fieldLoginDeviceName trimmedText]) && !IS_EMPTY([fieldLoginUsername trimmedText])) {
         [self.buttonLogin sendActionsForControlEvents:UIControlEventTouchUpInside];
     }
     
@@ -334,7 +337,7 @@ typedef enum : NSUInteger {
     if([textField isEqual:fieldRegisterPassword]) {
         [fieldRegisterConfirmPassword becomeFirstResponder];
     }
-    if([textField isEqual:fieldRegisterConfirmPassword] && !IS_EMPTY(fieldRegisterPassword.text) && !IS_EMPTY(fieldRegisterUsername.text)) {
+    if([textField isEqual:fieldRegisterConfirmPassword] && !IS_EMPTY([fieldRegisterPassword trimmedText]) && !IS_EMPTY([fieldRegisterUsername trimmedText])) {
         [self.buttonRegister sendActionsForControlEvents:UIControlEventTouchUpInside];
     }
     
