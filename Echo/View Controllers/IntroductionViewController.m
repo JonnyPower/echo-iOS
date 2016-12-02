@@ -9,14 +9,25 @@
 #import "IntroductionViewController.h"
 
 @interface IntroductionViewController ()
+@property (weak, nonatomic) IBOutlet UIImageView *imgPushExample;
 
 @end
 
 @implementation IntroductionViewController
 
+@synthesize imgPushExample = _imgPushExample;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [_imgPushExample.layer setCornerRadius: 12.0f];
+    [_imgPushExample.layer setMasksToBounds: YES];
+    
     // Do any additional setup after loading the view.
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -24,14 +35,19 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (IBAction)actionReady:(id)sender {
+    UIUserNotificationType allNotificationTypes =
+    (UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge);
+    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:allNotificationTypes categories:nil];
+    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+    [[UIApplication sharedApplication] registerForRemoteNotifications];
+    
+    [self dismissViewControllerAnimated: YES completion:^{
+    }];
 }
-*/
+
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortrait;
+}
 
 @end

@@ -1,10 +1,20 @@
-target 'Echo' do
+abstract_target 'Echos' do
 
   # Pods for Echo
   pod 'TTTAttributedLabel'
   pod 'PhoenixClient'
   pod 'Fabric'
   pod 'Crashlytics'
+  pod 'Firebase/Messaging'
+  
+  target 'Echo' do
+  end
+  
+  target 'Echo Dev' do
+  end
+  
+  target 'Echo Test' do
+  end
 
   target 'EchoTests' do
     inherit! :search_paths

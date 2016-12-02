@@ -15,6 +15,8 @@
 
 #import <Crashlytics/Crashlytics.h>
 
+@import Firebase;
+
 typedef enum : NSUInteger {
     AuthenticationViewControllerViewStateLogin,
     AuthenticationViewControllerViewStateRegister
@@ -276,7 +278,7 @@ typedef enum : NSUInteger {
         [client loginUsername: fieldLoginUsername.text
                      password: fieldLoginPassword.text
                    deviceName: fieldLoginDeviceName.text
-                  deviceToken: @"testing"];
+                  deviceToken: [[FIRInstanceID instanceID] token]];
         
         [Answers logCustomEventWithName:@"Login Attempted" customAttributes:@{@"Username":fieldLoginUsername.text,
                                                                               @"deviceName":fieldLoginDeviceName.text,
