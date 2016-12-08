@@ -9,9 +9,10 @@
 #import <UIKit/UIKit.h>
 
 #import "EchoWebSocketClient.h"
-#import "MessageInputView.h"
+#import "MessageTextFieldView.h"
+#import "OnlinePresence.h"
 
-@interface MessagingViewController : UITableViewController <UITableViewDataSource, MessageInputViewDelegate, NSFetchedResultsControllerDelegate, EchoWebSocketClientDelegate>
+@interface MessagingViewController : UITableViewController <UITableViewDataSource, MessageTextFieldViewDelegate, NSFetchedResultsControllerDelegate, EchoWebSocketClientDelegate>
 
 @property (weak, nonatomic) EchoWebSocketClient *webSocketClient;
 @property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;

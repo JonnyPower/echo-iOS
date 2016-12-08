@@ -11,6 +11,15 @@
 
 #import "Message.h"
 #import "Session.h"
+#import "OnlinePresence.h"
+
+@protocol EchoWebSocketPresenceDelegate <NSObject>
+
+- (void)participantsReset;
+- (void)participantJoined:(Participant*)joined;
+- (void)participantLeft:(Participant*)left;
+
+@end
 
 @protocol EchoWebSocketClientDelegate <NSObject>
 
@@ -34,6 +43,9 @@
 
 - (void)addDelegate:(id<EchoWebSocketClientDelegate>)delegate;
 - (void)removeDelegate:(id<EchoWebSocketClientDelegate>)delegate;
+
+- (void)addPresenceDelegate:(id<EchoWebSocketPresenceDelegate>)delegate;
+- (void)removePresenceDelegate:(id<EchoWebSocketPresenceDelegate>)delegate;
 
 - (void)connectWithSession:(Session*)session;
 - (void)pushMessage:(NSString*)content;

@@ -10,7 +10,7 @@
 #import "MessagingViewController.h"
 #import "MessageCell.h"
 #import "MessageTableView.h"
-#import "MessageInputView.h"
+#import "MessageTextFieldView.h"
 
 #import "Participant.h"
 
@@ -41,10 +41,12 @@
     AppDelegate *appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
     
     if(self.navigationItem.leftBarButtonItem == nil) {
-        [[self navigationItem] setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"‹ Logout"
-                                                                                     style:UIBarButtonItemStylePlain
-                                                                                    target:appDelegate
-                                                                                    action:@selector(logout)]];
+        UIBarButtonItem *logoutBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"‹ Logout"
+                                                                                style:UIBarButtonItemStylePlain
+                                                                               target:appDelegate
+                                                                               action:@selector(logout)];
+        [logoutBarButtonItem setTintColor:[UIColor whiteColor]];
+        [[self navigationItem] setLeftBarButtonItem: logoutBarButtonItem];
     }
     
     [self.view becomeFirstResponder];
@@ -52,8 +54,9 @@
     UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTouchView)];
     [self.view addGestureRecognizer:recognizer];
     
-    MessageInputView *inputView = (MessageInputView*)((MessageTableView*)self.tableView).inputAccessoryView;
-    inputView.delegate = self;
+    MessageTableView *tableView = ((MessageTableView*)self.tableView);
+    tableView.messageTextFieldView.delegate = self;
+    [webSocketClient addPresenceDelegate:tableView.messagePresenceView];
     
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Message"
                                               inManagedObjectContext:managedObjectContext];
@@ -163,7 +166,7 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UILabel *dayLabel = [[UILabel alloc] init];
-    [dayLabel setFrame: CGRectMake(0, 5, tableView.frame.size.width - 10, 20)];
+    [dayLabel setTranslatesAutoresizingMaskIntoConstraints: NO];
     [dayLabel setFont: [UIFont systemFontOfSize:10]];
     [dayLabel setTextColor:[UIColor lightGrayColor]];
     [dayLabel setTextAlignment:NSTextAlignmentCenter];
@@ -171,6 +174,29 @@
     
     UIView *headerView = [[UIView alloc] init];
     [headerView addSubview:dayLabel];
+    
+    NSLayoutConstraint *constraintDayLabelHeight = [NSLayoutConstraint constraintWithItem: dayLabel
+                                                                                attribute: NSLayoutAttributeHeight
+                                                                                relatedBy: NSLayoutRelationEqual
+                                                                                   toItem: nil
+                                                                                attribute: NSLayoutAttributeNotAnAttribute
+                                                                               multiplier: 1.0f
+                                                                                 constant: 20.0f];
+    NSLayoutConstraint *constraintDayLabelWidth = [NSLayoutConstraint constraintWithItem: dayLabel
+                                                                               attribute: NSLayoutAttributeWidth
+                                                                               relatedBy: NSLayoutRelationEqual
+                                                                                  toItem: headerView
+                                                                               attribute: NSLayoutAttributeWidth
+                                                                              multiplier: 1.0f
+                                                                                constant: 0.0f];
+    NSLayoutConstraint *constraintDayLabelCenterY = [NSLayoutConstraint constraintWithItem: dayLabel
+                                                                                 attribute: NSLayoutAttributeCenterY
+                                                                                 relatedBy: NSLayoutRelationEqual
+                                                                                    toItem: headerView
+                                                                                 attribute: NSLayoutAttributeCenterY
+                                                                                multiplier: 1.0f
+                                                                                  constant: 0.0f];
+    [headerView addConstraints:@[constraintDayLabelWidth, constraintDayLabelHeight, constraintDayLabelCenterY]];
     
     return headerView;
 }

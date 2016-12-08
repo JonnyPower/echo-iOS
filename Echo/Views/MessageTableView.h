@@ -7,9 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MessageTextFieldView.h"
+#import "MessagePresenceView.h"
 
 @interface MessageTableView : UITableView
 
 @property (nonatomic, readwrite, retain) UIView *inputAccessoryView;
+@property MessageTextFieldView *messageTextFieldView;
+@property MessagePresenceView *messagePresenceView;
 
 @end

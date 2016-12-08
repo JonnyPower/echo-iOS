@@ -21,6 +21,8 @@
 @property PhxSocket *socket;
 @property PhxChannel *channel;
 @property NSMutableSet<id<EchoWebSocketClientDelegate>>* delegates;
+@property NSMutableSet<id<EchoWebSocketPresenceDelegate>>* presenceDelegates;
+@property NSMapTable<NSNumber*, OnlinePresence*>* idToPresenceMap;
 
 @end
 
@@ -30,7 +32,9 @@
 @synthesize socket;
 @synthesize channel;
 @synthesize delegates;
+@synthesize presenceDelegates;
 @synthesize managedObjectContext;
+@synthesize idToPresenceMap;
 
 - (id)init {
     self = [super init];
@@ -40,6 +44,7 @@
         socket.delegate = self;
         
         delegates = [NSMutableSet set];
+        presenceDelegates = [NSMutableSet set];
     }
     
     return self;
@@ -66,11 +71,18 @@
         [[UIApplication sharedApplication] setApplicationIconBadgeNumber: 0];
     }];
     
+    [channel onEvent:@"presence_state" callback:^(id message, id ref) {
+        [self presenceState: message];
+    }];
+    
+    [channel onEvent:@"presence_diff" callback:^(id message, id ref) {
+        [self presenceDiff: message];
+    }];
+    
     PhxPush *join = [channel join];
     [join onReceive:@"ok" callback:^(id response) {
         [Answers logCustomEventWithName:@"Connected with session" customAttributes:@{@"username":session.username,
-                                                                                     @"deviceName":session.deviceName,
-                                                                                     @"deviceToken":session.deviceToken}];
+                                                                                     @"deviceName":session.deviceName}];
         for (NSDictionary *messageDictionary in [response objectForKey:@"messages"]) {
             [self saveMessage: messageDictionary];
         }
@@ -286,6 +298,101 @@
         }
     }
     return NO;
+}
+
+- (void)presenceState:(NSDictionary*)presenceState {
+    
+    for(id<EchoWebSocketPresenceDelegate> presenceDelegate in presenceDelegates) {
+        if([presenceDelegate respondsToSelector:@selector(participantsReset)]) {
+            [presenceDelegate participantsReset];
+        }
+    }
+    
+    self.idToPresenceMap = [NSMapTable strongToStrongObjectsMapTable];
+    [self handlePresenceJoins: presenceState];
+}
+
+- (void)handlePresenceJoins:(NSDictionary*)joins {
+    [joins enumerateKeysAndObjectsUsingBlock:^(NSString *deviceId, NSDictionary *presenceDictionary, BOOL *stop) {
+        NSFetchRequest *request= [[NSFetchRequest alloc] init];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"Participant" inManagedObjectContext:managedObjectContext];
+        NSPredicate *predicate =[NSPredicate predicateWithFormat:@"id==%d", [deviceId integerValue]];
+        [request setEntity:entity];
+        [request setPredicate:predicate];
+        
+        NSError *error;
+        NSArray *entities = [managedObjectContext executeFetchRequest:request error:&error];
+        
+        if(!error) {
+            Participant *participant = [entities firstObject];
+            NSDictionary *deviceDictionary = [presenceDictionary objectForKey:@"device"];
+            if(participant == nil) {
+                participant = [NSEntityDescription insertNewObjectForEntityForName: @"Participant"
+                                                            inManagedObjectContext: managedObjectContext];
+                participant.id = [deviceDictionary objectForKey:@"id"];
+            }
+            participant.name = [deviceDictionary objectForKey:@"name"];
+            participant.type = [deviceDictionary objectForKey:@"type"];
+            
+            NSDictionary *presenceMeta = [presenceDictionary objectForKey: @"meta"];
+            NSTimeInterval onlineAtEpoch = [[presenceMeta objectForKey:@"online_at"] doubleValue];
+            NSDate *onlineAt = [NSDate dateWithTimeIntervalSince1970:onlineAtEpoch];
+            
+            for(id<EchoWebSocketPresenceDelegate> presenceDelegate in presenceDelegates) {
+                if([presenceDelegate respondsToSelector:@selector(participantJoined:)]) {
+                    [presenceDelegate participantJoined: participant];
+                }
+            }
+            
+            OnlinePresence *devicePresence = [[OnlinePresence alloc] initWithParticipant: participant
+                                                                                onlineAt: onlineAt];
+            [self.idToPresenceMap setObject: devicePresence forKey: participant.id];
+        }
+    }];
+}
+
+- (void)handlePresenceLeaves:(NSDictionary*)leaves {
+    [leaves enumerateKeysAndObjectsUsingBlock:^(NSString *deviceId, NSDictionary *presenceDictionary, BOOL *stop) {
+        NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+        f.numberStyle = NSNumberFormatterDecimalStyle;
+        NSNumber *deviceIdNumber = [f numberFromString:deviceId];
+        
+        Participant *leftParticipant = [self.idToPresenceMap objectForKey: deviceIdNumber].participant;
+        for(id<EchoWebSocketPresenceDelegate> presenceDelegate in presenceDelegates) {
+            if([presenceDelegate respondsToSelector:@selector(participantLeft:)]) {
+                [presenceDelegate participantLeft: leftParticipant];
+            }
+        }
+        
+        [self.idToPresenceMap removeObjectForKey: deviceIdNumber];
+    }];
+}
+
+- (void)presenceDiff:(NSDictionary*)presenceDiff {
+    NSLog(@"Socket Presence Diff: %@", [presenceDiff description]);
+    
+    if(self.idToPresenceMap == nil) {
+        self.idToPresenceMap = [NSMapTable strongToStrongObjectsMapTable];
+    }
+    
+    NSDictionary *joins = [presenceDiff objectForKey: @"joins"];
+    [self handlePresenceJoins: joins];
+    
+    NSDictionary *leaves = [presenceDiff objectForKey: @"leaves"];
+    [self handlePresenceLeaves: leaves];
+}
+
+- (void)addPresenceDelegate:(id<EchoWebSocketPresenceDelegate>)delegate {
+    [presenceDelegates addObject: delegate];
+    for(OnlinePresence *onlinePresence in [self.idToPresenceMap objectEnumerator]) {
+        if([delegate respondsToSelector:@selector(participantJoined:)]) {
+            [delegate participantJoined: onlinePresence.participant];
+        }
+    }
+}
+
+- (void)removePresenceDelegate:(id<EchoWebSocketPresenceDelegate>)delegate {
+    [presenceDelegates removeObject:delegate];
 }
 
 @end

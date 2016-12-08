@@ -12,10 +12,13 @@
 		BF0F979282AC4FF8199C54AF /* libPods-Echos-Echo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E2D3C666BE071A7AD46186D /* libPods-Echos-Echo.a */; };
 		CC303BD8A3657CAC288356F1 /* libPods-Echos-Echo Test.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C65E8666E3E8AEF7EFD3E859 /* libPods-Echos-Echo Test.a */; };
 		D85A0530A585B82E8A723DD6 /* libPods-EchoUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F7B628810CC3D2E56D3ABC36 /* libPods-EchoUITests.a */; };
+		F00C94A41DF8DBE8004C636B /* MessagePresenceEntryView.m in Sources */ = {isa = PBXBuildFile; fileRef = F00C94A31DF8DBE8004C636B /* MessagePresenceEntryView.m */; };
+		F00C94A51DF8DBE8004C636B /* MessagePresenceEntryView.m in Sources */ = {isa = PBXBuildFile; fileRef = F00C94A31DF8DBE8004C636B /* MessagePresenceEntryView.m */; };
+		F00C94A61DF8DBE8004C636B /* MessagePresenceEntryView.m in Sources */ = {isa = PBXBuildFile; fileRef = F00C94A31DF8DBE8004C636B /* MessagePresenceEntryView.m */; };
 		F03D24F81DE78F5900CD2225 /* dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = F03D24F71DE78F5900CD2225 /* dev.plist */; };
 		F03D24FA1DE7916C00CD2225 /* test.plist in Resources */ = {isa = PBXBuildFile; fileRef = F03D24F91DE7916C00CD2225 /* test.plist */; };
 		F03D24FC1DE7917500CD2225 /* prod.plist in Resources */ = {isa = PBXBuildFile; fileRef = F03D24FB1DE7917500CD2225 /* prod.plist */; };
-		F03D25001DE791DA00CD2225 /* MessageInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = F0B487F61CDD4D3900C6AE6C /* MessageInputView.m */; };
+		F03D25001DE791DA00CD2225 /* MessageTextFieldView.m in Sources */ = {isa = PBXBuildFile; fileRef = F0B487F61CDD4D3900C6AE6C /* MessageTextFieldView.m */; };
 		F03D25011DE791DA00CD2225 /* MessageTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = F0B487F91CDD50D500C6AE6C /* MessageTableView.m */; };
 		F03D25021DE791DA00CD2225 /* Echo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F0A534C81CDB4EEE00A6D83A /* Echo.xcdatamodeld */; };
 		F03D25031DE791DA00CD2225 /* Session.m in Sources */ = {isa = PBXBuildFile; fileRef = F0B487FC1CDD629000C6AE6C /* Session.m */; };
@@ -40,7 +43,7 @@
 		F03D25191DE791DA00CD2225 /* dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = F03D24F71DE78F5900CD2225 /* dev.plist */; };
 		F03D251A1DE791DA00CD2225 /* test.plist in Resources */ = {isa = PBXBuildFile; fileRef = F03D24F91DE7916C00CD2225 /* test.plist */; };
 		F03D251B1DE791DA00CD2225 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F0A534C51CDB4EEE00A6D83A /* Main.storyboard */; };
-		F03D25271DE791E600CD2225 /* MessageInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = F0B487F61CDD4D3900C6AE6C /* MessageInputView.m */; };
+		F03D25271DE791E600CD2225 /* MessageTextFieldView.m in Sources */ = {isa = PBXBuildFile; fileRef = F0B487F61CDD4D3900C6AE6C /* MessageTextFieldView.m */; };
 		F03D25281DE791E600CD2225 /* MessageTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = F0B487F91CDD50D500C6AE6C /* MessageTableView.m */; };
 		F03D25291DE791E600CD2225 /* Echo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F0A534C81CDB4EEE00A6D83A /* Echo.xcdatamodeld */; };
 		F03D252A1DE791E600CD2225 /* Session.m in Sources */ = {isa = PBXBuildFile; fileRef = F0B487FC1CDD629000C6AE6C /* Session.m */; };
@@ -74,6 +77,12 @@
 		F074466E1DF0E52000CAEA07 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F074466D1DF0E52000CAEA07 /* GoogleService-Info.plist */; };
 		F074466F1DF0E52000CAEA07 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F074466D1DF0E52000CAEA07 /* GoogleService-Info.plist */; };
 		F07446701DF0E52000CAEA07 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F074466D1DF0E52000CAEA07 /* GoogleService-Info.plist */; };
+		F07446741DF20E8200CAEA07 /* OnlinePresence.m in Sources */ = {isa = PBXBuildFile; fileRef = F07446731DF20E8200CAEA07 /* OnlinePresence.m */; };
+		F07446751DF20E8200CAEA07 /* OnlinePresence.m in Sources */ = {isa = PBXBuildFile; fileRef = F07446731DF20E8200CAEA07 /* OnlinePresence.m */; };
+		F07446761DF20E8200CAEA07 /* OnlinePresence.m in Sources */ = {isa = PBXBuildFile; fileRef = F07446731DF20E8200CAEA07 /* OnlinePresence.m */; };
+		F07446791DF2311C00CAEA07 /* MessagePresenceView.m in Sources */ = {isa = PBXBuildFile; fileRef = F07446781DF2311C00CAEA07 /* MessagePresenceView.m */; };
+		F074467A1DF2311C00CAEA07 /* MessagePresenceView.m in Sources */ = {isa = PBXBuildFile; fileRef = F07446781DF2311C00CAEA07 /* MessagePresenceView.m */; };
+		F074467B1DF2311C00CAEA07 /* MessagePresenceView.m in Sources */ = {isa = PBXBuildFile; fileRef = F07446781DF2311C00CAEA07 /* MessagePresenceView.m */; };
 		F0A534BE1CDB4EEE00A6D83A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F0A534BD1CDB4EEE00A6D83A /* main.m */; };
 		F0A534C11CDB4EEE00A6D83A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F0A534C01CDB4EEE00A6D83A /* AppDelegate.m */; };
 		F0A534C41CDB4EEE00A6D83A /* AuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0A534C31CDB4EEE00A6D83A /* AuthenticationViewController.m */; };
@@ -91,7 +100,7 @@
 		F0B487E81CDD2DE200C6AE6C /* EchoWebSocketClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F0B487E71CDD2DE200C6AE6C /* EchoWebSocketClient.m */; };
 		F0B487F11CDD3CC900C6AE6C /* Participant+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F0B487EA1CDD3CC900C6AE6C /* Participant+CoreDataProperties.m */; };
 		F0B487F21CDD3CC900C6AE6C /* Participant.m in Sources */ = {isa = PBXBuildFile; fileRef = F0B487EC1CDD3CC900C6AE6C /* Participant.m */; };
-		F0B487F71CDD4D3900C6AE6C /* MessageInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = F0B487F61CDD4D3900C6AE6C /* MessageInputView.m */; };
+		F0B487F71CDD4D3900C6AE6C /* MessageTextFieldView.m in Sources */ = {isa = PBXBuildFile; fileRef = F0B487F61CDD4D3900C6AE6C /* MessageTextFieldView.m */; };
 		F0B487FA1CDD50D500C6AE6C /* MessageTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = F0B487F91CDD50D500C6AE6C /* MessageTableView.m */; };
 		F0B487FD1CDD629000C6AE6C /* Session.m in Sources */ = {isa = PBXBuildFile; fileRef = F0B487FC1CDD629000C6AE6C /* Session.m */; };
 		F0B488021CDE3C1000C6AE6C /* Message+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = F0B487FF1CDE3C1000C6AE6C /* Message+CoreDataProperties.m */; };
@@ -135,6 +144,8 @@
 		DFCE4DC3EEEA23522CE1750E /* Pods-Echos-Echo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Echos-Echo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Echos-Echo/Pods-Echos-Echo.debug.xcconfig"; sourceTree = "<group>"; };
 		E3EBC6876F1CB8137887A568 /* Pods-Echo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Echo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Echo/Pods-Echo.debug.xcconfig"; sourceTree = "<group>"; };
 		E43045A1F7A0ECF3AD50F195 /* libPods-EchoTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-EchoTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F00C94A21DF8DBE8004C636B /* MessagePresenceEntryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagePresenceEntryView.h; sourceTree = "<group>"; };
+		F00C94A31DF8DBE8004C636B /* MessagePresenceEntryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagePresenceEntryView.m; sourceTree = "<group>"; };
 		F03D24F51DE78EFC00CD2225 /* Helpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Helpers.h; sourceTree = "<group>"; };
 		F03D24F71DE78F5900CD2225 /* dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = dev.plist; sourceTree = "<group>"; };
 		F03D24F91DE7916C00CD2225 /* test.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = test.plist; sourceTree = "<group>"; };
@@ -148,6 +159,10 @@
 		F07446611DEF7DFB00CAEA07 /* EchoTextFieldValidationError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EchoTextFieldValidationError.h; sourceTree = "<group>"; };
 		F07446621DEF7DFB00CAEA07 /* EchoTextFieldValidationError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EchoTextFieldValidationError.m; sourceTree = "<group>"; };
 		F074466D1DF0E52000CAEA07 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F07446721DF20E8200CAEA07 /* OnlinePresence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnlinePresence.h; sourceTree = "<group>"; };
+		F07446731DF20E8200CAEA07 /* OnlinePresence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnlinePresence.m; sourceTree = "<group>"; };
+		F07446771DF2311C00CAEA07 /* MessagePresenceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagePresenceView.h; sourceTree = "<group>"; };
+		F07446781DF2311C00CAEA07 /* MessagePresenceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagePresenceView.m; sourceTree = "<group>"; };
 		F0A534B91CDB4EEE00A6D83A /* Echo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Echo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0A534BD1CDB4EEE00A6D83A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F0A534BF1CDB4EEE00A6D83A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -179,8 +194,8 @@
 		F0B487EA1CDD3CC900C6AE6C /* Participant+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Participant+CoreDataProperties.m"; sourceTree = "<group>"; };
 		F0B487EB1CDD3CC900C6AE6C /* Participant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Participant.h; sourceTree = "<group>"; };
 		F0B487EC1CDD3CC900C6AE6C /* Participant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Participant.m; sourceTree = "<group>"; };
-		F0B487F51CDD4D3900C6AE6C /* MessageInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageInputView.h; sourceTree = "<group>"; };
-		F0B487F61CDD4D3900C6AE6C /* MessageInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageInputView.m; sourceTree = "<group>"; };
+		F0B487F51CDD4D3900C6AE6C /* MessageTextFieldView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageTextFieldView.h; sourceTree = "<group>"; };
+		F0B487F61CDD4D3900C6AE6C /* MessageTextFieldView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageTextFieldView.m; sourceTree = "<group>"; };
 		F0B487F81CDD50D500C6AE6C /* MessageTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageTableView.h; sourceTree = "<group>"; };
 		F0B487F91CDD50D500C6AE6C /* MessageTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageTableView.m; sourceTree = "<group>"; };
 		F0B487FB1CDD629000C6AE6C /* Session.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Session.h; sourceTree = "<group>"; };
@@ -370,8 +385,12 @@
 			children = (
 				F0B487E31CDCF43600C6AE6C /* MessageCell.h */,
 				F0B487E41CDCF43600C6AE6C /* MessageCell.m */,
-				F0B487F51CDD4D3900C6AE6C /* MessageInputView.h */,
-				F0B487F61CDD4D3900C6AE6C /* MessageInputView.m */,
+				F0B487F51CDD4D3900C6AE6C /* MessageTextFieldView.h */,
+				F0B487F61CDD4D3900C6AE6C /* MessageTextFieldView.m */,
+				F07446771DF2311C00CAEA07 /* MessagePresenceView.h */,
+				F07446781DF2311C00CAEA07 /* MessagePresenceView.m */,
+				F00C94A21DF8DBE8004C636B /* MessagePresenceEntryView.h */,
+				F00C94A31DF8DBE8004C636B /* MessagePresenceEntryView.m */,
 				F0B487F81CDD50D500C6AE6C /* MessageTableView.h */,
 				F0B487F91CDD50D500C6AE6C /* MessageTableView.m */,
 				F0B488041CDEAE5800C6AE6C /* EchoButtonPrimary.h */,
@@ -419,6 +438,8 @@
 				F0B487FF1CDE3C1000C6AE6C /* Message+CoreDataProperties.m */,
 				F0B488001CDE3C1000C6AE6C /* Message.h */,
 				F0B488011CDE3C1000C6AE6C /* Message.m */,
+				F07446721DF20E8200CAEA07 /* OnlinePresence.h */,
+				F07446731DF20E8200CAEA07 /* OnlinePresence.m */,
 			);
 			path = "Data Model";
 			sourceTree = "<group>";
@@ -547,7 +568,7 @@
 		F0A534B11CDB4EEE00A6D83A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = JonnyPower;
 				TargetAttributes = {
 					F03D24FD1DE791DA00CD2225 = {
@@ -926,16 +947,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F03D25001DE791DA00CD2225 /* MessageInputView.m in Sources */,
+				F03D25001DE791DA00CD2225 /* MessageTextFieldView.m in Sources */,
 				F03D254F1DE7956500CD2225 /* BaseViewController.m in Sources */,
 				F03D25011DE791DA00CD2225 /* MessageTableView.m in Sources */,
 				F03D25021DE791DA00CD2225 /* Echo.xcdatamodeld in Sources */,
+				F07446761DF20E8200CAEA07 /* OnlinePresence.m in Sources */,
 				F03D25031DE791DA00CD2225 /* Session.m in Sources */,
 				F03D25041DE791DA00CD2225 /* MessagingViewController.m in Sources */,
 				F03D25051DE791DA00CD2225 /* IntroductionViewController.m in Sources */,
 				F03D25061DE791DA00CD2225 /* EchoWebServiceClient.m in Sources */,
+				F074467B1DF2311C00CAEA07 /* MessagePresenceView.m in Sources */,
 				F03D25071DE791DA00CD2225 /* Message+CoreDataProperties.m in Sources */,
 				F03D25081DE791DA00CD2225 /* AuthenticationViewController.m in Sources */,
+				F00C94A61DF8DBE8004C636B /* MessagePresenceEntryView.m in Sources */,
 				F03D25091DE791DA00CD2225 /* AppDelegate.m in Sources */,
 				F03D250A1DE791DA00CD2225 /* MessageCell.m in Sources */,
 				F03D250B1DE791DA00CD2225 /* EchoWebSocketClient.m in Sources */,
@@ -954,16 +978,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F03D25271DE791E600CD2225 /* MessageInputView.m in Sources */,
+				F03D25271DE791E600CD2225 /* MessageTextFieldView.m in Sources */,
 				F03D254E1DE7956500CD2225 /* BaseViewController.m in Sources */,
 				F03D25281DE791E600CD2225 /* MessageTableView.m in Sources */,
 				F03D25291DE791E600CD2225 /* Echo.xcdatamodeld in Sources */,
+				F07446751DF20E8200CAEA07 /* OnlinePresence.m in Sources */,
 				F03D252A1DE791E600CD2225 /* Session.m in Sources */,
 				F03D252B1DE791E600CD2225 /* MessagingViewController.m in Sources */,
 				F03D252C1DE791E600CD2225 /* IntroductionViewController.m in Sources */,
 				F03D252D1DE791E600CD2225 /* EchoWebServiceClient.m in Sources */,
+				F074467A1DF2311C00CAEA07 /* MessagePresenceView.m in Sources */,
 				F03D252E1DE791E600CD2225 /* Message+CoreDataProperties.m in Sources */,
 				F03D252F1DE791E600CD2225 /* AuthenticationViewController.m in Sources */,
+				F00C94A51DF8DBE8004C636B /* MessagePresenceEntryView.m in Sources */,
 				F03D25301DE791E600CD2225 /* AppDelegate.m in Sources */,
 				F03D25311DE791E600CD2225 /* MessageCell.m in Sources */,
 				F03D25321DE791E600CD2225 /* EchoWebSocketClient.m in Sources */,
@@ -982,16 +1009,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F0B487F71CDD4D3900C6AE6C /* MessageInputView.m in Sources */,
+				F0B487F71CDD4D3900C6AE6C /* MessageTextFieldView.m in Sources */,
 				F03D254D1DE7956500CD2225 /* BaseViewController.m in Sources */,
 				F0B487FA1CDD50D500C6AE6C /* MessageTableView.m in Sources */,
 				F0A534CA1CDB4EEE00A6D83A /* Echo.xcdatamodeld in Sources */,
+				F07446741DF20E8200CAEA07 /* OnlinePresence.m in Sources */,
 				F0B487FD1CDD629000C6AE6C /* Session.m in Sources */,
 				F0A534FB1CDB528800A6D83A /* MessagingViewController.m in Sources */,
 				F0A534F81CDB525900A6D83A /* IntroductionViewController.m in Sources */,
 				F0A535051CDCCC7F00A6D83A /* EchoWebServiceClient.m in Sources */,
+				F07446791DF2311C00CAEA07 /* MessagePresenceView.m in Sources */,
 				F0B488021CDE3C1000C6AE6C /* Message+CoreDataProperties.m in Sources */,
 				F0A534C41CDB4EEE00A6D83A /* AuthenticationViewController.m in Sources */,
+				F00C94A41DF8DBE8004C636B /* MessagePresenceEntryView.m in Sources */,
 				F0A534C11CDB4EEE00A6D83A /* AppDelegate.m in Sources */,
 				F0B487E51CDCF43600C6AE6C /* MessageCell.m in Sources */,
 				F0B487E81CDD2DE200C6AE6C /* EchoWebSocketClient.m in Sources */,
@@ -1143,8 +1173,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1188,8 +1220,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
