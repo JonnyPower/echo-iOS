@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "OnlinePresence.h"
 
 @protocol MessageTextFieldViewDelegate <NSObject>
 
@@ -19,7 +18,5 @@
 @interface MessageTextFieldView : UIView <UITextViewDelegate>
 
 @property id<MessageTextFieldViewDelegate> delegate;
-
-- (void)displayOnlinePresences:(NSSet<OnlinePresence*>*)presences;
 
 @end

@@ -140,15 +140,12 @@
 }
 
 - (void)actionSend:(id)sender {
-    if([sender isEqual:sendButton]) {
+    BOOL isPlaceholderText = [textView.text isEqualToString:PLACEHOLDER_TEXT] && textView.textColor == [UIColor lightGrayColor];
+    if([sender isEqual:sendButton] && !isPlaceholderText) {
         [delegate sendMessage:textView.text];
         [textView setText:@""];
         [textView resignFirstResponder];
     }
-}
-
-- (void)displayOnlinePresences:(NSSet<OnlinePresence *> *)presences {
-    
 }
 
 @end

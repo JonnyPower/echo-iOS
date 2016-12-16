@@ -369,8 +369,6 @@
 }
 
 - (void)presenceDiff:(NSDictionary*)presenceDiff {
-    NSLog(@"Socket Presence Diff: %@", [presenceDiff description]);
-    
     if(self.idToPresenceMap == nil) {
         self.idToPresenceMap = [NSMapTable strongToStrongObjectsMapTable];
     }

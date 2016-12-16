@@ -8,14 +8,23 @@
 
 #import "MessagePresenceEntryView.h"
 
+@interface MessagePresenceEntryView ()
+
+@property UIImage *onlineIndicatorImage;
+@property UIImage *offlineIndicatorImage;
+
+@end
+
 @implementation MessagePresenceEntryView
 
 @synthesize previous = _previous;
 @synthesize next = _next;
 @synthesize participant = _participant;
-@synthesize online;
+@synthesize online = _online;
 @synthesize deviceLabel;
 @synthesize onlineIndicator;
+@synthesize onlineIndicatorImage;
+@synthesize offlineIndicatorImage;
 
 CGFloat const ENTRY_HEIGHT = 30.0f;
 
@@ -30,7 +39,7 @@ CGFloat const INDICATOR_PADDING = 5.0f;
         
         _previous = previous;
         _participant = participant;
-        online = YES;
+        _online = YES;
         
         NSLayoutConstraint *constraintHeight = [NSLayoutConstraint constraintWithItem: self
                                                                             attribute: NSLayoutAttributeHeight
@@ -41,7 +50,10 @@ CGFloat const INDICATOR_PADDING = 5.0f;
                                                                              constant: ENTRY_HEIGHT];
         [self addConstraint: constraintHeight];
         
-        onlineIndicator = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"presence_indicator_online"]];
+        onlineIndicatorImage = [UIImage imageNamed:@"presence_indicator_online"];
+        offlineIndicatorImage = [UIImage imageNamed:@"presence_indicator_offline"];
+        
+        onlineIndicator = [[UIImageView alloc] initWithImage: onlineIndicatorImage];
         [onlineIndicator setTranslatesAutoresizingMaskIntoConstraints: NO];
         [self addSubview: onlineIndicator];
         
@@ -110,6 +122,15 @@ CGFloat const INDICATOR_PADDING = 5.0f;
     }
     
     return self;
+}
+
+- (BOOL)online {
+    return _online;
+}
+
+- (void)setOnline:(BOOL)online {
+    _online = online;
+    [onlineIndicator setImage: _online ? onlineIndicatorImage : offlineIndicatorImage ];
 }
 
 @end

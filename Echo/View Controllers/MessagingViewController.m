@@ -254,11 +254,11 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     Message *message = [fetchedResultsController objectAtIndexPath:indexPath];
-    CGRect messageBoundingRect = [message.content boundingRectWithSize:CGSizeMake([[UIScreen mainScreen] bounds].size.width - 40, 0)
+    CGRect messageBoundingRect = [message.content boundingRectWithSize:CGSizeMake(tableView.frame.size.width - 40, 0)
                                                                options:(NSStringDrawingUsesLineFragmentOrigin)
                                                             attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:12.0f]}
                                                                context:nil];
-    return ceilf(messageBoundingRect.size.height + 58);
+    return ceilf(messageBoundingRect.size.height + 40);
 }
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {

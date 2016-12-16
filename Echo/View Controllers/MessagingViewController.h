@@ -10,7 +10,6 @@
 
 #import "EchoWebSocketClient.h"
 #import "MessageTextFieldView.h"
-#import "OnlinePresence.h"
 
 @interface MessagingViewController : UITableViewController <UITableViewDataSource, MessageTextFieldViewDelegate, NSFetchedResultsControllerDelegate, EchoWebSocketClientDelegate>
 

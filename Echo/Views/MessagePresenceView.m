@@ -19,7 +19,7 @@
 @end
 
 CGFloat const PRESENCE_VIEW_HEIGHT = 30.0f;
-
+int const ENTRY_FADE_TIME_SECONDS = 15;
 CGFloat const ENTRY_PADDING = 5.0f;
 
 @implementation MessagePresenceView
@@ -118,13 +118,8 @@ CGFloat const ENTRY_PADDING = 5.0f;
     return self;
 }
 
-- (void)participantJoined:(Participant *)joined {
-    [self addEntryViewForParticipant: joined];
-}
-
-- (void)participantLeft:(Participant *)left {
-    MessagePresenceEntryView *entryView = [self.idToEntryView objectForKey: left.id];
-    if(entryView) {
+- (void)removePresenceEntryView:(MessagePresenceEntryView*)entryView {
+    if(entryView && ![entryView online]) {
         BOOL removeLastEntry = entryView.next == nil;
         if(removeLastEntry) {
             self.lastEntryView = entryView.previous;
@@ -139,9 +134,26 @@ CGFloat const ENTRY_PADDING = 5.0f;
                 entryView.previous.next = entryView.next;
             }
         }
-        [self.idToEntryView removeObjectForKey: left.id];
+        [self.idToEntryView removeObjectForKey: entryView.participant.id];
         [entryView removeFromSuperview];
     }
+}
+
+- (void)participantJoined:(Participant *)joined {
+    MessagePresenceEntryView *existing = [self.idToEntryView objectForKey:joined.id];
+    if(!existing) {
+        [self addEntryViewForParticipant: joined];
+    } else {
+        [existing setOnline:YES];
+    }
+}
+
+- (void)participantLeft:(Participant *)left {
+    MessagePresenceEntryView *entryView = [self.idToEntryView objectForKey: left.id];
+    [entryView setOnline: NO];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(ENTRY_FADE_TIME_SECONDS * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self removePresenceEntryView: entryView];
+    });
 }
 
 - (void)participantsReset {
