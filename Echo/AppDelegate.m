@@ -11,6 +11,9 @@
 #import <Crashlytics/Crashlytics.h>
 #import "AuthenticationViewController.h"
 #import "MessagingViewController.h"
+#import "IntroductionViewController.h"
+
+@import Firebase;
 
 @interface AppDelegate ()
 
@@ -19,6 +22,7 @@
 @implementation AppDelegate
 
 @synthesize webSocketClient = _webSocketClient;
+@synthesize isFirstLoad = _isFirstLoad;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
@@ -33,6 +37,26 @@
     authController.webSocketClient = _webSocketClient;
     
     navController.navigationBar.barStyle = UIBarStyleBlack;
+    
+    // Push
+    [FIRApp configure];
+    
+    id firstRunDate = [[NSUserDefaults standardUserDefaults] objectForKey: @"firstRunDate"];
+    if(firstRunDate == nil) {
+        _isFirstLoad = YES;
+        [[NSUserDefaults standardUserDefaults] setObject: [NSDate date] forKey: @"firstRunDate"];
+        
+        [self.window makeKeyAndVisible];
+        
+        IntroductionViewController *introductionViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"IntroductionViewController"];
+        introductionViewController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+        introductionViewController.modalPresentationStyle = UIModalPresentationCurrentContext;
+        [navController presentViewController:introductionViewController animated:NO completion:^{
+            
+        }];
+    } else {
+        _isFirstLoad = NO;
+    }
     
     return YES;
 }
